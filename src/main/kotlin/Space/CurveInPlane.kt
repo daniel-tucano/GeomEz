@@ -1,0 +1,4 @@
+package Space
+
+class CurveInPlane {
+}
