@@ -1,7 +1,8 @@
 package Space
 
 interface Points3DList {
-    abstract val points: List<Point3D>
+    val coordinateSystem: CoordinateSystem3D
+    val points: List<Point3D>
 
     val length: Double
         get() = points.foldIndexed(0.0) { index, acc, point3D ->
