@@ -1,5 +1,7 @@
 package Space
 
+import Plane.Point2D
+
 interface Points3DList {
     val coordinateSystem: CoordinateSystem3D
     val points: List<Point3D>
@@ -37,6 +39,19 @@ interface Points3DList {
         get() = Point3D(xPoints.average(), yPoints.average(), zPoints.average())
 
     operator fun get(index: Int) = this.points[index]
+
+    /**
+     * Gets a point from the list but wrap around it self when a index out of bounds it's provided
+     */
+    operator fun invoke(index: Int): Point3D {
+        if (index >= 0) {
+            return this.points[index % this.points.size]
+        }
+        /**
+         * The sum happens because the remainder of the division it's already negative
+         */
+        return this.points[this.points.size + index % this.points.size]
+    }
 
     fun inXRange(value: Double): Boolean = value in minX..maxX
     fun inYRange(value: Double): Boolean = value in minY..maxY

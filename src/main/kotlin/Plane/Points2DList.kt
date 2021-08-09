@@ -39,4 +39,17 @@ interface Points2DList {
 
     operator fun get(index: Int) = this.points[index]
 
+    /**
+     * Gets a point from the list but wrap around it self when a index out of bounds it's provided
+     */
+    operator fun invoke(index: Int): Point2D {
+        if (index >= 0) {
+            return this.points[index.rem(this.points.size)]
+        }
+        /**
+         * The sum happens because the remainder of the division it's already negative
+         */
+        return this.points[this.points.size + index.rem(this.points.size)]
+    }
+
 }
