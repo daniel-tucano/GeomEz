@@ -7,6 +7,7 @@ import Extensions.times
 import Space.CoordinateSystem3D
 import Space.Direction3D
 import Space.Point3D
+import Space.Vector3D
 import Units.Angle
 import Utils.rotationMatrix
 import org.ejml.simple.SimpleMatrix
@@ -23,6 +24,9 @@ data class Point2D(
 
     val distanceFromOrigin: Double
         get() = kotlin.math.sqrt(x.pow(2) + y.pow(2))
+
+    val toPositionVector3D
+        get() = Vector3D(x,y,0.0)
 
     val matrix: SimpleMatrix = SimpleMatrix(
         arrayOf(
