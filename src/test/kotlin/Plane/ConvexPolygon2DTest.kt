@@ -44,12 +44,19 @@ internal class ConvexPolygon2DTest {
                     Point2D(0.0, 0.0),
                     Point2D(1.0, 1.0),
                     Point2D(1.5, 0.5),
+                    Point2D(1.7, 0.7),
                     Point2D(2.0, 1.0),
                     Point2D(2.5, 0.0)
                 )
             )
 
-            assertTrue(remainingPoints.contains(Point2D(1.5, 0.5)))
+            assertTrue(
+                remainingPoints.containsAll(
+                    listOf(
+                        Point2D(1.5, 0.5), Point2D(1.7, 0.7)
+                    )
+                )
+            )
             assertTrue(
                 convexPolygon.points.containsAll(
                     listOf(
