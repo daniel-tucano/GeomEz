@@ -38,4 +38,8 @@ class Direction3D(xComponent: Double,yComponent: Double,zComponent: Double): Vec
 
         return Direction3D(a2 * b3 - a3 * b2, a3 * b1 - a1 * b3, a1 * b2 - a2 * b1)
     }
+
+    override fun unaryMinus(): Direction3D {
+        return Direction3D(-xComponent,-yComponent,-zComponent)
+    }
 }

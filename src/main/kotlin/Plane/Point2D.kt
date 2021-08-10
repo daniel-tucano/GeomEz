@@ -94,6 +94,10 @@ data class Point2D(
         return Point2D(x / scalar, y / scalar, coordinateSystem3D)
     }
 
+    operator fun unaryMinus(): Point2D {
+        return Point2D(-x,-y)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

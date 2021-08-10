@@ -66,6 +66,8 @@ abstract class Vector3DBase (
         )
     }
 
+    abstract operator fun unaryMinus(): Vector3DBase
+
 //    Vectorial operations
 
     infix fun dot(vector3D: Vector3DBase): Double {

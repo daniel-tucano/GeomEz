@@ -65,6 +65,10 @@ class Point3D(
         return Point3D(x / point3D.x, y / point3D.y, z / point3D.z)
     }
 
+    operator fun unaryMinus(): Point3D {
+        return Point3D(-x,-y,-z)
+    }
+
 //    Scalar operations
 
     operator fun plus(scalar: Double): Point3D {
