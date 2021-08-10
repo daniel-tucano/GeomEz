@@ -15,6 +15,13 @@ open class Curve3D(override val points: List<Point3D>): Points3DList {
         return Curve3D(points.map { it.rotate(axis, angle) })
     }
 
+    /**
+     * Describe point as if was written in the "asWrittenIn" coordinate system in terms of the "to" coordinate system
+     */
+    override fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): Curve3D {
+        return Curve3D(points.map { it.changeBasis(asWrittenIn, to) })
+    }
+
     // Point operations
 
     /**

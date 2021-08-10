@@ -10,13 +10,6 @@ open class CoordinateSystem3D(
     val origin: Point3D = Point3D(0.0, 0.0, 0.0)
 ) {
 
-    constructor(xDirection: Direction3D, yDirection: Direction3D, origin: Point3D = Point3D(0.0, 0.0, 0.0)) : this(
-        xDirection,
-        yDirection,
-        xDirection.cross(yDirection),
-        origin
-    )
-
     companion object {
         val MAIN_COORDINATE_SYSTEM =
             CoordinateSystem3D(

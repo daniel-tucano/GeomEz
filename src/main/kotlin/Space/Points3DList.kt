@@ -1,6 +1,7 @@
 package Space
 
 import Plane.Point2D
+import Plane.Points2DList
 
 interface Points3DList {
     val points: List<Point3D>
@@ -55,5 +56,10 @@ interface Points3DList {
     fun inXRange(value: Double): Boolean = value in minX..maxX
     fun inYRange(value: Double): Boolean = value in minY..maxY
     fun inZRange(value: Double): Boolean = value in minZ..maxZ
+
+    /**
+     * Describe point as if was written in the "asWrittenIn" coordinate system in terms of the "to" coordinate system
+     */
+    fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): Points3DList
 
 }

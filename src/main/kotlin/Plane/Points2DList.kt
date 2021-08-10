@@ -1,6 +1,7 @@
 package Plane
 
-import Units.Angle
+import Space.CoordinateSystem3D
+import Space.Points3DList
 
 interface Points2DList {
 
@@ -24,8 +25,8 @@ interface Points2DList {
     val length: Double
         get() = points.foldRightIndexed(0.0) { index, point, acc ->
             if (index != (points.size - 1)) {
-                point.distanceBetween(points[index+1])
-            } else 0.0
+                acc + point.distanceBetween(points[index+1])
+            } else acc
         }
 
     val centroid: Point2D
@@ -36,6 +37,11 @@ interface Points2DList {
 
     fun first(): Point2D = points.first()
     fun last(): Point2D = points.last()
+
+    /**
+     * Describe point as if was written in the "asWrittenIn" coordinate system in terms of the "to" coordinate system
+     */
+    fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): Points3DList
 
     operator fun get(index: Int) = this.points[index]
 

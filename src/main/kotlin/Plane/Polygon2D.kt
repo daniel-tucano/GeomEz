@@ -1,6 +1,7 @@
 package Plane
 
 import Space.CoordinateSystem3D
+import Space.Curve3D
 import Units.Angle
 import kotlin.math.absoluteValue
 
@@ -29,5 +30,12 @@ open class Polygon2D(override var points: List<Point2D>) : Points2DList {
      */
     fun rotate(centerOfRotation: Point2D, angle: Angle): Polygon2D {
         return Polygon2D(points.map { it.rotate(centerOfRotation, angle) })
+    }
+
+    /**
+     * Describe points as if was written in the "asWrittenIn" coordinate system in terms of the "to" coordinate system
+     */
+    override fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): Curve3D {
+        return Curve3D(points.map { it.changeBasis(asWrittenIn, to) })
     }
 }
