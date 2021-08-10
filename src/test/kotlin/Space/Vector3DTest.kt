@@ -66,4 +66,20 @@ internal class Vector3DTest {
 
         assertEquals(45.0, angleBetween_2.toDegrees().value, 10e-6)
     }
+
+    @Test
+    fun `must write vector in another coordinate system`() {
+        val vector = Vector3D(1.0, 1.0, 0.0)
+        val coordinateSystem = CoordinateSystem3D(
+            xDirection = -Direction3D.MAIN_Y_DIRECTION,
+            yDirection = Direction3D.MAIN_Z_DIRECTION,
+            zDirection = -Direction3D.MAIN_X_DIRECTION,
+            origin = Point3D(1.0, 0.0, 1.0)
+        )
+        val vectorInMainCoordinateSystem = vector.changeBasis(coordinateSystem, CoordinateSystem3D.MAIN_COORDINATE_SYSTEM)
+
+        assertEquals(1.0,vectorInMainCoordinateSystem.xComponent)
+        assertEquals(-1.0,vectorInMainCoordinateSystem.yComponent)
+        assertEquals(2.0,vectorInMainCoordinateSystem.zComponent)
+    }
 }
