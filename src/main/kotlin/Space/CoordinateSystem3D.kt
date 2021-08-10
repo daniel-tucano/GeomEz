@@ -1,17 +1,20 @@
 package Space
 
 import Units.Angle
+import org.ejml.simple.SimpleMatrix
 
 open class CoordinateSystem3D(
-    val xDirection: Direction3D,
-    val yDirection: Direction3D,
-    val zDirection: Direction3D
+    val xDirection: Direction3D = Direction3D.MAIN_X_DIRECTION,
+    val yDirection: Direction3D = Direction3D.MAIN_Y_DIRECTION,
+    val zDirection: Direction3D = Direction3D.MAIN_Z_DIRECTION,
+    val origin: Point3D = Point3D(0.0, 0.0, 0.0)
 ) {
 
     constructor(xDirection: Direction3D, yDirection: Direction3D, origin: Point3D = Point3D(0.0, 0.0, 0.0)) : this(
         xDirection,
         yDirection,
-        xDirection.cross(yDirection)
+        xDirection.cross(yDirection),
+        origin
     )
 
     companion object {
@@ -19,9 +22,34 @@ open class CoordinateSystem3D(
             CoordinateSystem3D(
                 Direction3D(1.0, 0.0, 0.0),
                 Direction3D(0.0, 1.0, 0.0),
-                Direction3D(0.0, 0.0, 1.0)
+                Direction3D(0.0, 0.0, 1.0),
+                Point3D(0.0, 0.0, 0.0)
             )
     }
+
+    val matrix: SimpleMatrix = xDirection.matrix
+        .combine(0, 1, yDirection.matrix)
+        .combine(0, 2, zDirection.matrix)
+
+    /**
+     * Matrix used for affine transformations that perform scaling and translation
+     */
+    val affineMatrix: SimpleMatrix
+        get() {
+            val (x1, x2, x3) = xDirection
+            val (y1, y2, y3) = yDirection
+            val (z1, z2, z3) = zDirection
+            val (p1, p2, p3) = origin
+
+            return SimpleMatrix(
+                arrayOf(
+                    doubleArrayOf(x1, y1, z1, p1),
+                    doubleArrayOf(x2, y2, z2, p2),
+                    doubleArrayOf(x3, y3, z3, p3),
+                    doubleArrayOf(0.0, 0.0, 0.0, 1.0)
+                )
+            )
+        }
 
     fun rotate(axis: Direction3D, angle: Angle): CoordinateSystem3D {
         return CoordinateSystem3D(

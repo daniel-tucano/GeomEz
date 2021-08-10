@@ -5,8 +5,8 @@ import Units.Angle
 import Units.cos
 import Units.sin
 
-class PolarCoordinate(val radius: Double, val angle: Angle, val coordinateSystem: CoordinateSystem3D = CoordinateSystem3D.MAIN_COORDINATE_SYSTEM) {
+class PolarCoordinate(val radius: Double, val angle: Angle) {
 
-    fun toPoint2D(): Point2D = Point2D( radius * cos(angle), radius * sin(angle), coordinateSystem)
+    fun toPoint2D(): Point2D = Point2D( radius * cos(angle), radius * sin(angle))
 
 }

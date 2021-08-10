@@ -17,8 +17,7 @@ import kotlin.math.sqrt
 class Point3D(
     var x: Double,
     var y: Double,
-    var z: Double,
-    val coordinateSystem3D: CoordinateSystem3D =  CoordinateSystem3D.MAIN_COORDINATE_SYSTEM
+    var z: Double
 ) {
 
     val distanceFromOrigin: Double
@@ -32,19 +31,45 @@ class Point3D(
         )
     )
 
+    /**
+     * Matrix used for affine transformations that perform scaling and translation
+     */
+    val affineMatrix: SimpleMatrix = SimpleMatrix(
+        arrayOf(
+            doubleArrayOf(x),
+            doubleArrayOf(y),
+            doubleArrayOf(z),
+            doubleArrayOf(1.0)
+        )
+    )
+
     fun distanceBetween(point3D: Point3D): Double = (point3D - this).distanceFromOrigin
 
     /**
      * Rotate point in the anti-clockwise direction along the given axis
      */
-    fun rotate (axis: Vector3D, angle: Angle): Point3D {
+    fun rotate(axis: Vector3D, angle: Angle): Point3D {
         /* First we need to translate the vector position to a point where the axis position
         act as the origin of our coordinate system  */
         val intermediatePosition = this - axis.position
         /* Now we need to find the rotation matrix */
-        val rotationMatrix = rotationMatrix(axis.direction,angle)
-        val (pX,pY,pZ) = rotationMatrix * intermediatePosition.matrix
-        return Point3D(pX,pY,pZ) + axis.position
+        val rotationMatrix = rotationMatrix(axis.direction, angle)
+        val (pX, pY, pZ) = rotationMatrix * intermediatePosition.matrix
+        return Point3D(pX, pY, pZ) + axis.position
+    }
+
+    /**
+     * Describe point as if was written in the "asWrittenIn" coordinate system in terms of the "to" coordinate system
+     */
+    fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): Point3D {
+        /**
+         * 1 - We write the point vector as if it was written in the main coordinate system by multiplying its matrix
+         * by the "asWrittenIn" matrix (asWrittenIn matrix describe its basis vectors in main coordinate system terms)
+         * 2 - Then we write the resultant coordinates in the "to" coordinate system by multiplying it by the inverse of
+         * the "to" matrix
+         */
+        val (newX,newY,newZ) = to.affineMatrix.invert() * asWrittenIn.affineMatrix * this.affineMatrix
+        return Point3D(newX,newY,newZ)
     }
 
 //    Point operations
@@ -96,7 +121,6 @@ class Point3D(
         if (x != other.x) return false
         if (y != other.y) return false
         if (z != other.z) return false
-        if (coordinateSystem3D != other.coordinateSystem3D) return false
 
         return true
     }
@@ -105,8 +129,13 @@ class Point3D(
         var result = x.hashCode()
         result = 31 * result + y.hashCode()
         result = 31 * result + z.hashCode()
-        result = 31 * result + coordinateSystem3D.hashCode()
         return result
     }
+
+    operator fun component1(): Double = x
+
+    operator fun component2(): Double = y
+
+    operator fun component3(): Double = z
 
 }

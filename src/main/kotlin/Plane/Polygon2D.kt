@@ -7,7 +7,7 @@ import kotlin.math.absoluteValue
 /**
  * Represent a closed polygon
  */
-open class Polygon2D(override var points: List<Point2D>, val coordinateSystem: CoordinateSystem3D = CoordinateSystem3D.MAIN_COORDINATE_SYSTEM) : Points2DList {
+open class Polygon2D(override var points: List<Point2D>) : Points2DList {
 
     override val centroid: Point2D
         get() = Point2D(points.map { it.x }.average(), points.map { it.y }.average())

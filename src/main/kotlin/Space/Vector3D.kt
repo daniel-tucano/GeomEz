@@ -16,8 +16,7 @@ open class Vector3D (
     xComponent: Double,
     yComponent: Double,
     zComponent: Double,
-    val position: Point3D = Point3D(0.0, 0.0, 0.0),
-    val coordinateSystem3D: CoordinateSystem3D = MAIN_COORDINATE_SYSTEM
+    val position: Point3D = Point3D(0.0, 0.0, 0.0)
 ): Vector3DBase(xComponent,yComponent,zComponent) {
 
     val direction: Direction3D
@@ -49,6 +48,24 @@ open class Vector3D (
         /* Then we return to our previous origin */
         val newPosition = Point3D(pX,pY,pZ)
         return Vector3D(vX,vY,vZ,newPosition)
+    }
+
+    /**
+     * Describe point as if was written in the "asWrittenIn" coordinate system in terms of the "to" coordinate system
+     */
+    fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): Vector3D {
+        /**
+         * 1 - We write the point vector as if it was written in the main coordinate system by multiplying its matrix
+         * by the "asWrittenIn" matrix (asWrittenIn matrix describe its basis vectors in main coordinate system terms)
+         * 2 - Then we write the resultant coordinates in the "to" coordinate system by multiplying it by the inverse of
+         * the "to" matrix
+         */
+        val (newX,newY,newZ) = to.affineMatrix.invert() * asWrittenIn.affineMatrix * this.affineMatrix
+        return Vector3D(newX,newY,newZ)
+    }
+
+    override fun unaryMinus(): Vector3D {
+        return Vector3D(-xComponent,-yComponent,-zComponent,-position)
     }
 
 }

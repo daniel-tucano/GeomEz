@@ -9,7 +9,7 @@ import Units.Angle
 /**
  * Represents a circle in with it's center at the origin of the coordinate system
  */
-class Circle(nPoints: Int, radius: Double, coordinateSystem: CoordinateSystem3D) : Polygon2D(constructCirclePoints(nPoints, radius), coordinateSystem) {
+class Circle(nPoints: Int, radius: Double) : Polygon2D(constructCirclePoints(nPoints, radius)) {
 
     companion object {
         private fun constructCirclePoints(nPoints: Int, radius: Double): List<Point2D> {

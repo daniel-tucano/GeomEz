@@ -3,7 +3,6 @@ package Space
 import Plane.Point2D
 
 interface Points3DList {
-    val coordinateSystem: CoordinateSystem3D
     val points: List<Point3D>
 
     val length: Double

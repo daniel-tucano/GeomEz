@@ -2,7 +2,7 @@ package Space
 
 import Units.Angle
 
-open class Curve3D(override val points: List<Point3D>, override val coordinateSystem: CoordinateSystem3D = CoordinateSystem3D.MAIN_COORDINATE_SYSTEM): Points3DList {
+open class Curve3D(override val points: List<Point3D>): Points3DList {
 
     constructor(vararg points3D: Point3D): this(points3D.toList())
 

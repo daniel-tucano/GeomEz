@@ -19,10 +19,9 @@ class Helix(
      * Positive in the anti-clockwise direction
      */
     startingAngle: Angle,
-    antiClockwise: Boolean = true,
-    coordinateSystem: CoordinateSystem3D
+    antiClockwise: Boolean = true
 ) : Curve3D(
-    constructHelixPoints(nPoints.toInt(), radius, zDistance, turns, startingAngle, antiClockwise), coordinateSystem
+    constructHelixPoints(nPoints.toInt(), radius, zDistance, turns, startingAngle, antiClockwise)
 ) {
 
     companion object {

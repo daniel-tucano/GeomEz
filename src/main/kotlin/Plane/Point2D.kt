@@ -16,8 +16,7 @@ import kotlin.math.pow
 
 data class Point2D(
     var x: Double,
-    var y: Double,
-    val coordinateSystem3D: CoordinateSystem3D = CoordinateSystem3D.MAIN_COORDINATE_SYSTEM
+    var y: Double
 ) {
 
     constructor(pair: Pair<Double, Double>) : this(pair.first, pair.second)
@@ -36,7 +35,19 @@ data class Point2D(
         )
     )
 
-    fun toPoint3D(z: Double = 0.0) = Point3D(x, y, z, coordinateSystem3D)
+    /**
+     * Matrix used for affine transformations that perform scaling and translation
+     */
+    val affineMatrix: SimpleMatrix = SimpleMatrix(
+        arrayOf(
+            doubleArrayOf(x),
+            doubleArrayOf(y),
+            doubleArrayOf(0.0),
+            doubleArrayOf(1.0)
+        )
+    )
+
+    fun toPoint3D(z: Double = 0.0) = Point3D(x, y, z)
 
     fun distanceBetween(point2D: Point2D): Double = (this - point2D).distanceFromOrigin
 
@@ -54,44 +65,54 @@ data class Point2D(
         return Point2D(pX, pY) + centerOfRotation
     }
 
+    /**
+     * Describe point as if was written in the "asWrittenIn" coordinate system in terms of the "to" coordinate system
+     */
+    fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): Point3D {
+        /**
+         * 1 - We write the point vector as if it was written in the main coordinate system by multiplying its matrix
+         * by the "asWrittenIn" matrix (asWrittenIn matrix describe its basis vectors in main coordinate system terms)
+         * 2 - Then we write the resultant coordinates in the "to" coordinate system by multiplying it by the inverse of
+         * the "to" matrix
+         */
+        val (newX,newY,newZ) = to.affineMatrix.invert() * asWrittenIn.affineMatrix * this.affineMatrix
+        return Point3D(newX,newY,newZ)
+    }
+
     //    Point operations
 
     operator fun plus(point2D: Point2D): Point2D {
-        if (this.coordinateSystem3D != point2D.coordinateSystem3D) throw IllegalArgumentException("Points coordinate systems must be the same")
-        return Point2D(x + point2D.x, y + point2D.y, coordinateSystem3D)
+        return Point2D(x + point2D.x, y + point2D.y)
     }
 
     operator fun minus(point2D: Point2D): Point2D {
-        if (this.coordinateSystem3D != point2D.coordinateSystem3D) throw IllegalArgumentException("Points coordinate systems must be the same")
-        return Point2D(x - point2D.x, y - point2D.y, coordinateSystem3D)
+        return Point2D(x - point2D.x, y - point2D.y)
     }
 
     operator fun times(point2D: Point2D): Point2D {
-        if (this.coordinateSystem3D != point2D.coordinateSystem3D) throw IllegalArgumentException("Points coordinate systems must be the same")
-        return Point2D(x * point2D.x, y * point2D.y, coordinateSystem3D)
+        return Point2D(x * point2D.x, y * point2D.y)
     }
 
     operator fun div(point2D: Point2D): Point2D {
-        if (this.coordinateSystem3D != point2D.coordinateSystem3D) throw IllegalArgumentException("Points coordinate systems must be the same")
-        return Point2D(x / point2D.x, y / point2D.y, coordinateSystem3D)
+        return Point2D(x / point2D.x, y / point2D.y)
     }
 
 //    Scalar operations
 
     operator fun plus(scalar: Double): Point2D {
-        return Point2D(x + scalar, y + scalar, coordinateSystem3D)
+        return Point2D(x + scalar, y + scalar)
     }
 
     operator fun minus(scalar: Double): Point2D {
-        return Point2D(x - scalar, y - scalar, coordinateSystem3D)
+        return Point2D(x - scalar, y - scalar)
     }
 
     operator fun times(scalar: Double): Point2D {
-        return Point2D(x * scalar, y * scalar, coordinateSystem3D)
+        return Point2D(x * scalar, y * scalar)
     }
 
     operator fun div(scalar: Double): Point2D {
-        return Point2D(x / scalar, y / scalar, coordinateSystem3D)
+        return Point2D(x / scalar, y / scalar)
     }
 
     operator fun unaryMinus(): Point2D {
@@ -106,7 +127,6 @@ data class Point2D(
 
         if (x != other.x) return false
         if (y != other.y) return false
-        if (coordinateSystem3D != other.coordinateSystem3D) return false
 
         return true
     }
@@ -114,7 +134,6 @@ data class Point2D(
     override fun hashCode(): Int {
         var result = x.hashCode()
         result = 31 * result + y.hashCode()
-        result = 31 * result + coordinateSystem3D.hashCode()
         return result
     }
 

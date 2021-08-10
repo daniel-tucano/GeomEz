@@ -28,6 +28,18 @@ abstract class Vector3DBase (
         )
     )
 
+    /**
+     * Matrix used for affine transformations that perform scaling and translation
+     */
+    val affineMatrix: SimpleMatrix = SimpleMatrix(
+        arrayOf(
+            doubleArrayOf(xComponent),
+            doubleArrayOf(yComponent),
+            doubleArrayOf(zComponent),
+            doubleArrayOf(1.0)
+        )
+    )
+
     infix fun angleBetween(vector3D: Vector3DBase): Angle.Radians {
         return Angle.Radians(acos(this dot vector3D / (this.module * vector3D.module)))
     }
