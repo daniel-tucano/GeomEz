@@ -1,5 +1,6 @@
 package space.elements3D
 
+import extensions.equalsDelta
 import units.Angle
 import org.ejml.simple.SimpleMatrix
 import kotlin.math.acos
@@ -137,9 +138,9 @@ sealed class VectorialEntity3D (
 
         other as VectorialEntity3D
 
-        if (x != other.x) return false
-        if (y != other.y) return false
-        if (z != other.z) return false
+        if (!x.equalsDelta(other.x)) return false
+        if (!y.equalsDelta(other.y)) return false
+        if (!z.equalsDelta(other.z)) return false
         return true
     }
 

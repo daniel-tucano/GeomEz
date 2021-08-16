@@ -2,12 +2,13 @@ package plane
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import space.elements3D.Direction3D
 import java.lang.IllegalArgumentException
 
 internal class Function2DTest {
 
     @Test
-    fun `must interpolate correctly in the provided points of the line` () {
+    fun `must interpolate correctly in the provided points of the line`() {
         val function = Function2D(
             listOf(
                 Point2D(0.0, 0.0),
@@ -17,18 +18,26 @@ internal class Function2DTest {
             )
         )
 
-        val interpolatedPoint1 = function.interpolate(0.75)
-        val interpolatedPoint2 = function.interpolate(1.5)
+        val interpolatedPoint1 = function.interpolate(0.0)
+        val interpolatedPoint2 = function.interpolate(0.125)
+        val interpolatedPoint3 = function.interpolate(0.75)
+        val interpolatedPoint4 = function.interpolate(1.5)
 
-        assertEquals(interpolatedPoint1.x, 0.75)
-        assertEquals(interpolatedPoint1.y, 0.75)
+        assertEquals(interpolatedPoint1.x, 0.0)
+        assertEquals(interpolatedPoint1.y, 0.0)
 
-        assertEquals(interpolatedPoint2.x, 1.5)
-        assertEquals(interpolatedPoint2.y, 1.25)
+        assertEquals(interpolatedPoint2.x, 0.125)
+        assertEquals(interpolatedPoint2.y, 0.125)
+
+        assertEquals(interpolatedPoint3.x, 0.75)
+        assertEquals(interpolatedPoint3.y, 0.75)
+
+        assertEquals(interpolatedPoint4.x, 1.5)
+        assertEquals(interpolatedPoint4.y, 1.25)
     }
 
     @Test
-    fun `must give the correct derivative value approximation at the borders` () {
+    fun `must give the correct derivative value approximation at the borders`() {
         val function = Function2D(
             listOf(
                 Point2D(0.0, 0.0),
@@ -38,7 +47,7 @@ internal class Function2DTest {
             )
         )
 
-        val derivativeFunction = function.derivative()
+        val derivativeFunction = function.derivative
         val firstPointDerivative = derivativeFunction.first()
         val lastPointDerivative = derivativeFunction.last()
 
@@ -50,7 +59,7 @@ internal class Function2DTest {
     }
 
     @Test
-    fun `must give the correct derivative value approximation at the inner points` () {
+    fun `must give the correct derivative value approximation at the inner points`() {
         val function = Function2D(
             listOf(
                 Point2D(0.0, 0.0),
@@ -60,7 +69,7 @@ internal class Function2DTest {
             )
         )
 
-        val derivativeFunction = function.derivative()
+        val derivativeFunction = function.derivative
         val secondPointDerivative = derivativeFunction[1]
         val thirdPointDerivative = derivativeFunction[2]
 
@@ -72,7 +81,7 @@ internal class Function2DTest {
     }
 
     @Test
-    fun `must give the correct integral approximation in the given interval` () {
+    fun `must give the correct integral approximation in the given interval`() {
         val function = Function2D(
             listOf(
                 Point2D(0.0, 0.0),
@@ -130,4 +139,45 @@ internal class Function2DTest {
             )
         }
     }
+
+    @Test
+    fun `must give the correct tangent direction at given points`() {
+        val function = Function2D(
+            listOf(
+                Point2D(0.0, 0.0),
+                Point2D(0.5, 0.5),
+                Point2D(1.0, 1.25),
+                Point2D(1.5, 1.0)
+            )
+        )
+
+        val tangent1 = function.tangentDirection(0.0)
+        val tangent2 = function.tangentDirection(0.25)
+        val tangent3 = function.tangentDirection(1.0)
+
+        assertTrue(tangent1 == Direction3D(1.0, 1.0, 0.0))
+        assertTrue(tangent2 == Direction3D(1.0, 1.125, 0.0))
+        assertTrue(tangent3 == Direction3D(1.0, 0.5, 0.0))
+    }
+
+        @Test
+    fun `must give the correct normal direction at given points`() {
+        val function = Function2D(
+            listOf(
+                Point2D(0.0, 0.0),
+                Point2D(0.5, 0.5),
+                Point2D(1.0, 1.25),
+                Point2D(1.5, 1.0)
+            )
+        )
+
+        val normal1 = function.normalDirection(0.0)
+        val normal2 = function.normalDirection(0.25)
+        val normal3 = function.normalDirection(1.0)
+
+        assertTrue(normal1 == Direction3D(-1.0, 1.0, 0.0))
+        assertTrue(normal2 == Direction3D(-1.0, 1/1.125, 0.0))
+        assertTrue(normal3 == Direction3D(-1.0, 1/0.5, 0.0))
+    }
+
 }
