@@ -2,6 +2,7 @@ package plane
 
 import space.CoordinateSystem3D
 import space.Curve3D
+import space.elements3D.Direction3D
 import java.lang.IllegalArgumentException
 
 /**
@@ -37,16 +38,31 @@ open class Function2D(override val points: List<Point2D>) : Points2DList {
          * relation to the previous x. The closest it gets from 1 the closest it is from the
          * next point x, the closest it is from 0 the closest it is from the previous point x
          */
-        val fracNext = (xPoints[nextI] - x) / (xPoints[nextI] - xPoints[prevI])
+        val fracNext = (x - xPoints[prevI]) / (xPoints[nextI] - xPoints[prevI])
 
         return points[nextI] * fracNext + points[prevI] * (1 - fracNext)
+    }
+
+    /**
+     * Approximation of the direction tangent to the point provided pointing towards x direction
+     */
+    fun tangentDirection(x: Double): Direction3D {
+        return Direction3D(1.0,this.derivative.interpolate(x).y,0.0)
+    }
+
+    /**
+     * Approximation of the direction tangent to the point provided, pointing outwards of the curvature (convex side)
+     */
+    fun normalDirection(x: Double): Direction3D {
+        return Direction3D.MAIN_Z_DIRECTION cross tangentDirection(x)
     }
 
     /**
      * Return the function with the corresponding derivatives values using the mid point approximation
      * for inner points and lateral approximation for boundary points
      */
-    fun derivative(): Function2D {
+    val derivative: Function2D
+        get() {
         val derivativeFirstPoint =
             Point2D(xPoints.first(), (yPoints.first() - yPoints[1]) / (xPoints.first() - xPoints[1]))
         val derivativeLastPoint = Point2D(
