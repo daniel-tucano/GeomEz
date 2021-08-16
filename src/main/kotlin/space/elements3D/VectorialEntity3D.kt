@@ -14,7 +14,7 @@ sealed class VectorialEntity3D (
     final override var y: Double,
     final override var z: Double,
 ): Entity3D {
-    val module = sqrt(x.pow(2.0) + y.pow(2.0) + z.pow(2.0))
+    var module = sqrt(x.pow(2.0) + y.pow(2.0) + z.pow(2.0))
 
     override val matrix: SimpleMatrix = SimpleMatrix(
         arrayOf(
@@ -135,7 +135,7 @@ sealed class VectorialEntity3D (
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as Vector3D
+        other as VectorialEntity3D
 
         if (x != other.x) return false
         if (y != other.y) return false
