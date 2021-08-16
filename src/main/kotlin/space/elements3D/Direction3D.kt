@@ -7,6 +7,8 @@ import extensions.times
 import space.CoordinateSystem3D
 import units.Angle
 import utils.rotationMatrix
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 /**
  * Represent a direction (unit vector at the origin) in 3D space
@@ -14,9 +16,10 @@ import utils.rotationMatrix
 class Direction3D(xComponent: Double, yComponent: Double, zComponent: Double) :
     VectorialEntity3D(xComponent, yComponent, zComponent) {
     init {
-        super.x /= module
-        super.y /= module
-        super.z /= module
+        this.x = this.x / module
+        this.y = this.y / module
+        this.z = this.z / module
+        this.module = sqrt(this.x.pow(2) + this.y.pow(2) + this.z.pow(2))
     }
 
     companion object {
@@ -30,7 +33,7 @@ class Direction3D(xComponent: Double, yComponent: Double, zComponent: Double) :
      * Rotate vector in the anti-clockwise direction along the given axis
      */
     override fun rotate(axis: VectorialEntity3D, angle: Angle): VectorialEntity3D {
-        when (axis) {
+        return when (axis) {
             is Vector3D -> {
                 /* First we need to translate the vector position to a point where the axis position
                 act as the origin of our coordinate system  */
@@ -41,12 +44,12 @@ class Direction3D(xComponent: Double, yComponent: Double, zComponent: Double) :
                 val (vX, vY, vZ) = rotationMatrix * this.matrix
                 /* Then we return to our previous origin */
                 val newPosition = Point3D(pX, pY, pZ) + axis.position
-                return Vector3D(vX, vY, vZ, newPosition)
+                Vector3D(vX, vY, vZ, newPosition)
             }
             is Direction3D -> {
                 val rotationMatrix = rotationMatrix(axis, angle)
                 val (vX, vY, vZ) = rotationMatrix * this.matrix
-                return Direction3D(vX, vY, vZ)
+                Direction3D(vX, vY, vZ)
             }
         }
     }
