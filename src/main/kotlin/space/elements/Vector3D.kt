@@ -75,7 +75,7 @@ open class Vector3D(
     }
 
     override fun unaryMinus(): Vector3D {
-        return Vector3D(-x, -y, -z, -position)
+        return Vector3D(-x, -y, -z, position)
     }
 
 }
