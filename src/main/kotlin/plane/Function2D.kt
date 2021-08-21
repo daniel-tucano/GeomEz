@@ -1,5 +1,7 @@
 package plane
 
+import plane.elements.Direction2D
+import plane.elements.Point2D
 import space.CoordinateSystem3D
 import space.Curve3D
 import space.elements3D.Direction3D
