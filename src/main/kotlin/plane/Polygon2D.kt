@@ -3,6 +3,7 @@ package plane
 import plane.elements.Point2D
 import space.CoordinateSystem3D
 import space.Curve3D
+import space.elements.Point3D
 import units.Angle
 import kotlin.math.absoluteValue
 
@@ -36,7 +37,7 @@ open class Polygon2D(override var points: List<Point2D>) : Points2DList {
     /**
      * Describe points as if was written in the "asWrittenIn" coordinate system in terms of the "to" coordinate system
      */
-    override fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): Curve3D {
-        return Curve3D(points.map { it.changeBasis(asWrittenIn, to) })
+    override fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): List<Point3D> {
+        return points.map { it.changeBasis(asWrittenIn, to) }
     }
 }

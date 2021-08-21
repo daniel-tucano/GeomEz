@@ -2,7 +2,7 @@ package plane
 
 import plane.elements.Point2D
 import space.CoordinateSystem3D
-import space.Points3DList
+import space.elements.Point3D
 
 interface Points2DList {
 
@@ -42,7 +42,7 @@ interface Points2DList {
     /**
      * Describe point as if was written in the "asWrittenIn" coordinate system in terms of the "to" coordinate system
      */
-    fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): Points3DList
+    fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): List<Point3D>
 
     operator fun get(index: Int) = this.points[index]
 

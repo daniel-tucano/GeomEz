@@ -4,7 +4,8 @@ import plane.elements.Direction2D
 import plane.elements.Point2D
 import space.CoordinateSystem3D
 import space.Curve3D
-import space.elements3D.Direction3D
+import space.elements.Direction3D
+import space.elements.Point3D
 import java.lang.IllegalArgumentException
 
 /**
@@ -48,19 +49,17 @@ open class Function2D(override val points: List<Point2D>) : Points2DList {
     /**
      * Approximation of the direction tangent to the point provided pointing towards x direction
      */
-    fun tangentDirection(x: Double): Direction3D {
-        return Direction3D(1.0,this.derivative.interpolate(x).y,0.0)
+    fun tangentDirection(x: Double): Direction2D {
+        return Direction2D(1.0,this.derivative.interpolate(x).y)
     }
 
     /**
      * Approximation of the direction tangent to the point provided, pointing outwards of the curvature (convex side)
      */
-    fun normalDirection(x: Double): Direction3D {
-        return Direction3D.MAIN_Z_DIRECTION cross tangentDirection(x)
-    }
+    fun normalDirection(x: Double): Direction2D = tangentDirection(x).perpendicularDirection()
 
     /**
-     * Return the function with the corresponding derivatives values using the mid point approximation
+     * Return the function with the corresponding derivatives values using the mid-point approximation
      * for inner points and lateral approximation for boundary points
      */
     val derivative: Function2D
@@ -103,7 +102,11 @@ open class Function2D(override val points: List<Point2D>) : Points2DList {
     /**
      * Describe points as if was written in the "asWrittenIn" coordinate system in terms of the "to" coordinate system
      */
-    override fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): Curve3D {
-        return Curve3D(points.map { it.changeBasis(asWrittenIn, to) })
+    override fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): List<Point3D> {
+        return points.map { it.changeBasis(asWrittenIn, to) }
+    }
+
+    operator fun invoke(x: Double): Point2D {
+        return interpolate(x)
     }
 }
