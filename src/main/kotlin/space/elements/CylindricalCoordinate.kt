@@ -1,20 +1,16 @@
 package space.elements
 
-import space.elements3D.Direction3D
-import space.elements3D.Point3D
-import space.elements3D.Vector3D
 import units.Angle
 import units.cos
 import units.sin
 
 /**
- * Represents a cylindrical coordinate with positive angle in anti-clockwise direction and 0 at x axis
+ * Represents a cylindrical coordinate with positive angle in anti-clockwise direction and 0 at x-axis
  */
 class CylindricalCoordinate(
     val radius: Double,
     val angle: Angle,
-    val z: Double,
-    val coordinateSystem3D: CoordinateSystem3D = CoordinateSystem3D.MAIN_COORDINATE_SYSTEM
+    val z: Double
 ) {
 
     fun toPoint3D(): Point3D = Point3D(radius * cos(angle),radius * sin(angle),z)
