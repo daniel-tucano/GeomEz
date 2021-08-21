@@ -5,10 +5,13 @@ import units.Angle
 import org.ejml.simple.SimpleMatrix
 
 interface Entity3D {
-    var x: Double
-    var y: Double
-    var z: Double
+    val x: Double
+    val y: Double
+    val z: Double
 
+    /**
+     * Column matrix representation of that entity with its x, y and z components respectively
+     */
     val matrix: SimpleMatrix
         get() = SimpleMatrix(
             arrayOf(
@@ -20,6 +23,7 @@ interface Entity3D {
 
     /**
      * Matrix used for affine transformations that perform scaling, translation and rotation
+     * It's the same as 'matrix' but with an extra element at the end with value of 1
      */
     val affineMatrix: SimpleMatrix
         get() = SimpleMatrix(
@@ -32,16 +36,16 @@ interface Entity3D {
         )
 
     /**
-     * Rotate point in the anti-clockwise direction along the given axis
+     * Rotate entity in the anti-clockwise direction along the given axis
      */
     fun rotate(axis: VectorialEntity3D, angle: Angle): Entity3D
 
     /**
-     * Describe point as if was written in the "asWrittenIn" coordinate system in terms of the "to" coordinate system
+     * Describe entity as if was written in the "asWrittenIn" coordinate system in terms of the "to" coordinate system
      */
     fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): Entity3D
 
-    //    TridimentionalEntity operations
+    // Three-dimensional Entity operations
 
     operator fun plus(entity3D: Entity3D): Entity3D
 
