@@ -8,12 +8,12 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 /**
- * Base class from wich Vector3D and Direction3D can extend
+ * Base class from which Vector3D and Direction3D can extend
  */
 sealed class VectorialEntity3D (
-    final override var x: Double,
-    final override var y: Double,
-    final override var z: Double,
+    final override val x: Double,
+    final override val y: Double,
+    final override val z: Double,
 ): Entity3D {
     var module = sqrt(x.pow(2.0) + y.pow(2.0) + z.pow(2.0))
 
@@ -92,22 +92,13 @@ sealed class VectorialEntity3D (
         return Vector3D(a2 * b3 - a3 * b2, a3 * b1 - a1 * b3, a1 * b2 - a2 * b1)
     }
 
-//    Component gets and sets
+//    Component get
 
     operator fun get(index: Int): Double {
         return when (index) {
             0 -> x
             1 -> y
             2 -> z
-            else -> throw IllegalAccessError("Index out of bounds")
-        }
-    }
-
-    operator fun set(index: Int, value: Double) {
-        when (index) {
-            0 -> x = value
-            1 -> y = value
-            2 -> z = value
             else -> throw IllegalAccessError("Index out of bounds")
         }
     }
