@@ -32,17 +32,17 @@ open class Function2D(override val points: List<Point2D>) : Points2DList {
             throw IllegalArgumentException("X value out of function range")
         }
         // Finding indexes of the points where the provided x would be between
-        val nextI = xPoints.indexOfFirst { it > x }
-        val prevI = nextI - 1
+        val nextXIndex = xPoints.indexOfFirst { it > x }
+        val previousXIndex = nextXIndex - 1
 
         /**
          * Fraction corresponding to the proximity of the provided x to the next x in
          * relation to the previous x. The closest it gets from 1 the closest it is from the
          * next point x, the closest it is from 0 the closest it is from the previous point x
          */
-        val fracNext = (x - xPoints[prevI]) / (xPoints[nextI] - xPoints[prevI])
+        val fractionOfNextX = (x - xPoints[previousXIndex]) / (xPoints[nextXIndex] - xPoints[previousXIndex])
 
-        return points[nextI] * fracNext + points[prevI] * (1 - fracNext)
+        return points[nextXIndex] * fractionOfNextX + points[previousXIndex] * (1 - fractionOfNextX)
     }
 
     /**
