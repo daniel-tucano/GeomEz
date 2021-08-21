@@ -1,4 +1,4 @@
-package space.elements3D
+package space.elements
 
 import space.CoordinateSystem3D
 import units.Angle

@@ -1,7 +1,7 @@
 package space
 
-import space.elements3D.Point3D
-import space.elements3D.Vector3D
+import space.elements.Point3D
+import space.elements.Vector3D
 import units.Angle
 
 open class Curve3D(override val points: List<Point3D>): Points3DList {
@@ -35,7 +35,7 @@ open class Curve3D(override val points: List<Point3D>): Points3DList {
     // Scalar operations
 
     /**
-     * Multiplying the points by a scalar is equivalent to scale the curve along with it's centroid
+     * Multiplying the points by a scalar is equivalent to scale the curve along with its centroid
      */
     operator fun times(scalar: Double): Curve3D = Curve3D(this.points.map { it * scalar })
     operator fun div(scalar: Double): Curve3D = Curve3D(this.points.map { it / scalar })

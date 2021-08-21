@@ -1,4 +1,4 @@
-package space.elements3D
+package space.elements
 
 import extensions.*
 import space.CoordinateSystem3D

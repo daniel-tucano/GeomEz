@@ -1,6 +1,6 @@
 package space
 
-import space.elements3D.Point3D
+import space.elements.Point3D
 
 interface Points3DList {
     val points: List<Point3D>
@@ -40,7 +40,7 @@ interface Points3DList {
     operator fun get(index: Int) = this.points[index]
 
     /**
-     * Gets a point from the list but wrap around it self when a index out of bounds it's provided
+     * Gets a point from the list but wrap around itself when an index out of bounds it's provided
      */
     operator fun invoke(index: Int): Point3D {
         if (index >= 0) {

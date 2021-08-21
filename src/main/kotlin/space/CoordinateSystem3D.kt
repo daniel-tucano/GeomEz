@@ -1,7 +1,7 @@
 package space
 
-import space.elements3D.Direction3D
-import space.elements3D.Point3D
+import space.elements.Direction3D
+import space.elements.Point3D
 import units.Angle
 import org.ejml.simple.SimpleMatrix
 

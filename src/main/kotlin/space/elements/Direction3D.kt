@@ -1,9 +1,10 @@
-package space.elements3D
+package space.elements
 
 import extensions.component1
 import extensions.component2
 import extensions.component3
 import extensions.times
+import plane.elements.Direction2D
 import space.CoordinateSystem3D
 import units.Angle
 import utils.rotationMatrix

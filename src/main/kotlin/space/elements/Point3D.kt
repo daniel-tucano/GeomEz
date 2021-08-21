@@ -1,4 +1,4 @@
-package space.elements3D
+package space.elements
 
 import extensions.component1
 import extensions.component2

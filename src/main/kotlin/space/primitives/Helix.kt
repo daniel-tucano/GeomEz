@@ -1,8 +1,8 @@
 package space.primitives
 
 import space.Curve3D
-import space.CylindricalCoordinate
-import space.elements3D.Point3D
+import space.elements.CylindricalCoordinate
+import space.elements.Point3D
 import units.Angle
 
 /**

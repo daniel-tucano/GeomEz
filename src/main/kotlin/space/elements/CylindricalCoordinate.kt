@@ -1,4 +1,4 @@
-package space
+package space.elements
 
 import space.elements3D.Direction3D
 import space.elements3D.Point3D
