@@ -16,14 +16,12 @@ import kotlin.math.sqrt
 /**
  * Represent a direction (unit vector at the origin) in 3D space
  */
-class Direction3D(xComponent: Double, yComponent: Double, zComponent: Double) :
-    VectorialEntity3D(xComponent, yComponent, zComponent) {
-    init {
-        this.x = this.x / module
-        this.y = this.y / module
-        this.z = this.z / module
-        this.module = sqrt(this.x.pow(2) + this.y.pow(2) + this.z.pow(2))
-    }
+class Direction3D(x: Double, y: Double, z: Double) :
+    VectorialEntity3D(
+        x / sqrt(x.pow(2.0) + y.pow(2.0) + z.pow(2.0)),
+        y / sqrt(x.pow(2.0) + y.pow(2.0) + z.pow(2.0)),
+        z / sqrt(x.pow(2.0) + y.pow(2.0) + z.pow(2.0))
+    ) {
 
     companion object {
         val MAIN_X_DIRECTION = Direction3D(1.0, 0.0, 0.0)
@@ -80,6 +78,16 @@ class Direction3D(xComponent: Double, yComponent: Double, zComponent: Double) :
         val (b1, b2, b3) = direction
 
         return Direction3D(a2 * b3 - a3 * b2, a3 * b1 - a1 * b3, a1 * b2 - a2 * b1)
+    }
+
+    /**
+     * Treat a 2D direction as a vector in XY plane (z component = 0)
+     */
+    infix fun cross(direction: Direction2D): Direction3D {
+        val (a1, a2, a3) = this
+        val (b1, b2) = direction
+
+        return Direction3D( - a3 * b2, a3 * b1, a1 * b2 - a2 * b1)
     }
 
     override fun unaryMinus(): Direction3D {
