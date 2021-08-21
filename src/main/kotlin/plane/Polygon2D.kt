@@ -1,5 +1,6 @@
 package plane
 
+import plane.elements.Point2D
 import space.CoordinateSystem3D
 import space.Curve3D
 import units.Angle

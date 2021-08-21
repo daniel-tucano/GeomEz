@@ -1,7 +1,7 @@
 package plane.primitives
 
 import plane.Function2D
-import plane.Point2D
+import plane.elements.Point2D
 import utils.factorial
 import utils.linspace
 import kotlin.math.pow

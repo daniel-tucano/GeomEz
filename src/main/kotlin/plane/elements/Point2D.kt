@@ -1,15 +1,15 @@
-package plane
+package plane.elements
 
 import extensions.component1
 import extensions.component2
 import extensions.component3
 import extensions.times
 import space.CoordinateSystem3D
-import space.elements3D.Direction3D
-import space.elements3D.Point3D
-import space.elements3D.Vector3D
+import space.elements.Direction3D
+import space.elements.Point3D
+import space.elements.Vector3D
 import units.Angle
-import utils.rotationMatrix
+import utils.rotationMatrix3D
 import org.ejml.simple.SimpleMatrix
 import kotlin.math.pow
 
@@ -58,8 +58,7 @@ data class Point2D(
         act as the origin of our coordinate system  */
         val intermediatePosition = this - centerOfRotation
         /* Now we need to find the rotation matrix */
-        // TODO("Verify if using only main z direction is enough for all use cases")
-        val rotationMatrix = rotationMatrix(Direction3D.MAIN_Z_DIRECTION, angle)
+        val rotationMatrix = rotationMatrix3D(Direction3D.MAIN_Z_DIRECTION, angle)
         val (pX, pY, _) = rotationMatrix * intermediatePosition.matrix
         return Point2D(pX, pY) + centerOfRotation
     }

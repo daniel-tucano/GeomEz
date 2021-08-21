@@ -1,12 +1,12 @@
 package plane.primitives
 
-import plane.Point2D
-import plane.PolarCoordinate
+import plane.elements.Point2D
+import plane.elements.PolarCoordinate
 import plane.Polygon2D
 import units.Angle
 
 /**
- * Represents a circle in with it's center at the origin of the coordinate system
+ * Represents a circle in with its center at the origin of the coordinate system
  */
 class Circle(nPoints: Int, radius: Double) : Polygon2D(constructCirclePoints(nPoints, radius)) {
 

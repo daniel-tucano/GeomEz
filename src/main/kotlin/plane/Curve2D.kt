@@ -35,7 +35,7 @@ data class Curve2D (override var points: List<Point2D>): Points2DList {
     // Scalar operations
 
     /**
-     * Multiplying the points by a scalar is equivalent to scale the curve along with it's centroid
+     * Multiplying the points by a scalar is equivalent to scale the curve along with its centroid
      */
     operator fun times(scalar: Double): Curve2D = Curve2D(this.points.map { it * scalar })
     operator fun div(scalar: Double): Curve2D = Curve2D(this.points.map { it / scalar })

@@ -1,5 +1,6 @@
 package plane
 
+import plane.elements.Point2D
 import space.CoordinateSystem3D
 import space.Points3DList
 
@@ -46,7 +47,7 @@ interface Points2DList {
     operator fun get(index: Int) = this.points[index]
 
     /**
-     * Gets a point from the list but wrap around it self when a index out of bounds it's provided
+     * Gets a point from the list but wrap around itself when an index out of bounds it's provided
      */
     operator fun invoke(index: Int): Point2D {
         if (index >= 0) {

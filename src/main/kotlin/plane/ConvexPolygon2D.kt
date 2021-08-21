@@ -1,5 +1,7 @@
 package plane
 
+import plane.elements.Point2D
+
 class ConvexPolygon2D(points: List<Point2D>) : Polygon2D(points) {
 
     /**

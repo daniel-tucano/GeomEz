@@ -12,7 +12,7 @@ import java.lang.IllegalArgumentException
 open class Function2D(override val points: List<Point2D>) : Points2DList {
 
     /**
-     * Certifies that all x values are in ascending order and do not have repeated x values
+     * Certifies that all x values are in ascending order and do not have repetition
      */
     init {
         if (xPoints.sorted() != xPoints) {

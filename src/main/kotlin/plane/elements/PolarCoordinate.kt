@@ -1,4 +1,4 @@
-package plane
+package plane.elements
 
 import units.Angle
 import units.cos
