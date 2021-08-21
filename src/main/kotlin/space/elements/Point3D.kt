@@ -1,12 +1,9 @@
 package space.elements
 
-import extensions.component1
-import extensions.component2
-import extensions.component3
-import extensions.times
+import extensions.*
 import space.CoordinateSystem3D
 import units.Angle
-import utils.rotationMatrix
+import utils.rotationMatrix3D
 import org.ejml.simple.SimpleMatrix
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -55,13 +52,13 @@ class Point3D(
                 act as the origin of our coordinate system  */
                 val intermediatePosition = this - axis.position
                 /* Now we need to find the rotation matrix */
-                val rotationMatrix = rotationMatrix(axis.direction, angle)
+                val rotationMatrix = rotationMatrix3D(axis.direction, angle)
                 val (pX, pY, pZ) = rotationMatrix * intermediatePosition.matrix
                 return Point3D(pX, pY, pZ) + axis.position
             }
-            else -> {
+            is Direction3D -> {
                 /* Now we need to find the rotation matrix */
-                val rotationMatrix = rotationMatrix(axis, angle)
+                val rotationMatrix = rotationMatrix3D(axis, angle)
                 val (pX, pY, pZ) = rotationMatrix * this.matrix
                 return Point3D(pX, pY, pZ)
             }

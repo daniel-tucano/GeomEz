@@ -1,8 +1,8 @@
 package utils
 
 import plane.ConvexPolygon2D
-import plane.Point2D
-import space.elements3D.Direction3D
+import plane.elements.Point2D
+import space.elements.Direction3D
 
 fun convexHull(points2D: List<Point2D>): Pair<ConvexPolygon2D, List<Point2D>> {
     val minYPoint = points2D.sortedBy { it.y }[0]

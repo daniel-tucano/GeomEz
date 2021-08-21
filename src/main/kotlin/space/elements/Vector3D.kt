@@ -3,7 +3,7 @@ package space.elements
 import extensions.*
 import space.CoordinateSystem3D
 import units.Angle
-import utils.rotationMatrix
+import utils.rotationMatrix3D
 
 /**
  * Represent a vector with arbitrary module and position in 3D space
@@ -34,11 +34,12 @@ open class Vector3D(
     override fun rotate(axis: VectorialEntity3D, angle: Angle): Vector3D {
         when (axis) {
             is Vector3D -> {
+                // TODO("Write this method using affine rotation matrix")
                 /* First we need to translate the vector position to a point where the axis position
                 act as the origin of our coordinate system  */
                 val intermediatePosition = this.position - axis.position
                 /* Now we need to find the rotation matrix */
-                val rotationMatrix = rotationMatrix(axis.direction, angle)
+                val rotationMatrix = rotationMatrix3D(axis.direction, angle)
                 val (pX, pY, pZ) = rotationMatrix * intermediatePosition.matrix
                 val (vX, vY, vZ) = rotationMatrix * this.matrix
                 /* Then we return to our previous origin */
@@ -46,7 +47,7 @@ open class Vector3D(
                 return Vector3D(vX, vY, vZ, newPosition)
             }
             is Direction3D -> {
-                val rotationMatrix = rotationMatrix(axis, angle)
+                val rotationMatrix = rotationMatrix3D(axis, angle)
                 val (pX, pY, pZ) = rotationMatrix * this.position.matrix
                 val (vX, vY, vZ) = rotationMatrix * this.matrix
                 /* Then we return to our previous origin */

@@ -7,7 +7,9 @@ import extensions.times
 import plane.elements.Direction2D
 import space.CoordinateSystem3D
 import units.Angle
-import utils.rotationMatrix
+import utils.rotationMatrix3D
+import kotlin.math.pow
+import kotlin.math.sqrt
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -38,9 +40,9 @@ class Direction3D(xComponent: Double, yComponent: Double, zComponent: Double) :
             is Vector3D -> {
                 /* First we need to translate the vector position to a point where the axis position
                 act as the origin of our coordinate system  */
-                val intermediatePosition = - axis.position
+                val intermediatePosition = -axis.position
                 /* Now we need to find the rotation matrix */
-                val rotationMatrix = rotationMatrix(axis.direction, angle)
+                val rotationMatrix = rotationMatrix3D(axis.direction, angle)
                 val (pX, pY, pZ) = rotationMatrix * intermediatePosition.matrix
                 val (vX, vY, vZ) = rotationMatrix * this.matrix
                 /* Then we return to our previous origin */
@@ -48,7 +50,7 @@ class Direction3D(xComponent: Double, yComponent: Double, zComponent: Double) :
                 Vector3D(vX, vY, vZ, newPosition)
             }
             is Direction3D -> {
-                val rotationMatrix = rotationMatrix(axis, angle)
+                val rotationMatrix = rotationMatrix3D(axis, angle)
                 val (vX, vY, vZ) = rotationMatrix * this.matrix
                 Direction3D(vX, vY, vZ)
             }
@@ -63,9 +65,13 @@ class Direction3D(xComponent: Double, yComponent: Double, zComponent: Double) :
          * the "to" matrix
          */
         val (newHeadX, newHeadY, newHeadZ) = to.affineMatrix.invert() * asWrittenIn.affineMatrix * this.affineMatrix
-        val (newTailX, newTailY, newTailZ) = to.affineMatrix.invert() * asWrittenIn.affineMatrix * Point3D(0.0,0.0,0.0).affineMatrix
-        val newHead = Point3D(newHeadX,newHeadY,newHeadZ)
-        val newTail = Point3D(newTailX,newTailY,newTailZ)
+        val (newTailX, newTailY, newTailZ) = to.affineMatrix.invert() * asWrittenIn.affineMatrix * Point3D(
+            0.0,
+            0.0,
+            0.0
+        ).affineMatrix
+        val newHead = Point3D(newHeadX, newHeadY, newHeadZ)
+        val newTail = Point3D(newTailX, newTailY, newTailZ)
         return Vector3D(headPosition = newHead, tailPosition = newTail)
     }
 

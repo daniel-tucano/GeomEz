@@ -6,7 +6,7 @@ import space.elements.Point3D
 import units.Angle
 
 /**
- * Represents an Helix that start at Z = 0 and grows towards z direction
+ * Represents a Helix that start at Z = 0 and grows towards z direction
  */
 class Helix(
     nPoints: UInt,
