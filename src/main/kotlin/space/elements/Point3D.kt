@@ -40,6 +40,8 @@ class Point3D(
         )
     )
 
+    fun asVector3D(): Vector3D = Vector3D(x,y,z)
+
     fun distanceBetween(point3D: Point3D): Double = (point3D - this).distanceFromOrigin
 
     /**
@@ -126,9 +128,9 @@ class Point3D(
 
         other as Point3D
 
-        if (x != other.x) return false
-        if (y != other.y) return false
-        if (z != other.z) return false
+        if (!x.equalsDelta(other.x)) return false
+        if (!y.equalsDelta(other.y)) return false
+        if (!z.equalsDelta(other.z)) return false
 
         return true
     }
