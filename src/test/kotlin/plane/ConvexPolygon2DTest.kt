@@ -3,6 +3,7 @@ package plane
 import utils.convexHull
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import plane.elements.Point2D
 import java.lang.IllegalArgumentException
 
 internal class ConvexPolygon2DTest {

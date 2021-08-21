@@ -1,6 +1,7 @@
 package plane
 
 import org.junit.jupiter.api.Test
+import plane.elements.Point2D
 import kotlin.test.assertEquals
 
 internal class Curve2DTest {

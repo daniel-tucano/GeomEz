@@ -1,7 +1,7 @@
 package space
 
-import space.elements3D.Direction3D
-import space.elements3D.Point3D
+import space.elements.Direction3D
+import space.elements.Point3D
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -15,7 +15,7 @@ internal class Point3DTest {
             zDirection = -Direction3D.MAIN_X_DIRECTION,
             origin = Point3D(1.0, 0.0, 1.0)
         )
-        val pointInMainCoordinateSystem = point.changeBasis(coordinateSystem, CoordinateSystem3D.MAIN_COORDINATE_SYSTEM)
+        val pointInMainCoordinateSystem = point.changeBasis(coordinateSystem, CoordinateSystem3D.MAIN_3D_COORDINATE_SYSTEM)
 
         assertEquals(1.0,pointInMainCoordinateSystem.x)
         assertEquals(-1.0,pointInMainCoordinateSystem.y)

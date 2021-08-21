@@ -2,6 +2,7 @@ package plane
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import plane.elements.Point2D
 
 internal class Polygon2DTest {
     @Test

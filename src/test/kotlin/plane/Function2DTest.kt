@@ -2,8 +2,8 @@ package plane
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import space.elements3D.Direction3D
-import java.lang.IllegalArgumentException
+import plane.elements.Direction2D
+import plane.elements.Point2D
 
 internal class Function2DTest {
 
@@ -155,12 +155,12 @@ internal class Function2DTest {
         val tangent2 = function.tangentDirection(0.25)
         val tangent3 = function.tangentDirection(1.0)
 
-        assertTrue(tangent1 == Direction3D(1.0, 1.0, 0.0))
-        assertTrue(tangent2 == Direction3D(1.0, 1.125, 0.0))
-        assertTrue(tangent3 == Direction3D(1.0, 0.5, 0.0))
+        assertTrue(tangent1 == Direction2D(1.0, 1.0))
+        assertTrue(tangent2 == Direction2D(1.0, 1.125))
+        assertTrue(tangent3 == Direction2D(1.0, 0.5))
     }
 
-        @Test
+    @Test
     fun `must give the correct normal direction at given points`() {
         val function = Function2D(
             listOf(
@@ -175,9 +175,9 @@ internal class Function2DTest {
         val normal2 = function.normalDirection(0.25)
         val normal3 = function.normalDirection(1.0)
 
-        assertTrue(normal1 == Direction3D(-1.0, 1.0, 0.0))
-        assertTrue(normal2 == Direction3D(-1.0, 1/1.125, 0.0))
-        assertTrue(normal3 == Direction3D(-1.0, 1/0.5, 0.0))
+        assertTrue(normal1 == Direction2D(-1.0, 1.0))
+        assertTrue(normal2 == Direction2D(-1.0, 1 / 1.125))
+        assertTrue(normal3 == Direction2D(-1.0, 1 / 0.5))
     }
 
 }

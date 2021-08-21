@@ -1,8 +1,8 @@
 package space
 
-import space.elements3D.Direction3D
-import space.elements3D.Point3D
-import space.elements3D.Vector3D
+import space.elements.Direction3D
+import space.elements.Point3D
+import space.elements.Vector3D
 import units.Angle
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -80,7 +80,7 @@ class Vector3DTest {
             origin = Point3D(1.0, 0.0, 1.0)
         )
         val vectorInMainCoordinateSystem =
-            vector.changeBasis(asWrittenIn = coordinateSystem, to = CoordinateSystem3D.MAIN_COORDINATE_SYSTEM)
+            vector.changeBasis(asWrittenIn = coordinateSystem, to = CoordinateSystem3D.MAIN_3D_COORDINATE_SYSTEM)
 
         assertEquals(0.0, vectorInMainCoordinateSystem.x)
         assertEquals(-1.0, vectorInMainCoordinateSystem.y)
