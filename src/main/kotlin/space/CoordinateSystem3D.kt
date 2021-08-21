@@ -13,11 +13,11 @@ open class CoordinateSystem3D(
 ) {
 
     companion object {
-        val MAIN_COORDINATE_SYSTEM =
+        val MAIN_3D_COORDINATE_SYSTEM =
             CoordinateSystem3D(
-                Direction3D(1.0, 0.0, 0.0),
-                Direction3D(0.0, 1.0, 0.0),
-                Direction3D(0.0, 0.0, 1.0),
+                Direction3D.MAIN_X_DIRECTION,
+                Direction3D.MAIN_Y_DIRECTION,
+                Direction3D.MAIN_Z_DIRECTION,
                 Point3D(0.0, 0.0, 0.0)
             )
     }
