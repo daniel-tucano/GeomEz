@@ -2,7 +2,6 @@ package space.elements
 
 import extensions.equalsDelta
 import units.Angle
-import org.ejml.simple.SimpleMatrix
 import kotlin.math.acos
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -16,26 +15,6 @@ sealed class VectorialEntity3D (
     final override val z: Double,
 ): Entity3D {
     var module = sqrt(x.pow(2.0) + y.pow(2.0) + z.pow(2.0))
-
-    override val matrix: SimpleMatrix = SimpleMatrix(
-        arrayOf(
-            doubleArrayOf(x),
-            doubleArrayOf(y),
-            doubleArrayOf(z)
-        )
-    )
-
-    /**
-     * Matrix used for affine transformations that perform scaling and translation
-     */
-    override val affineMatrix: SimpleMatrix = SimpleMatrix(
-        arrayOf(
-            doubleArrayOf(x),
-            doubleArrayOf(y),
-            doubleArrayOf(z),
-            doubleArrayOf(1.0)
-        )
-    )
 
     infix fun angleBetween(vector3D: VectorialEntity3D): Angle.Radians {
         return Angle.Radians(acos(this dot vector3D / (this.module * vector3D.module)))
