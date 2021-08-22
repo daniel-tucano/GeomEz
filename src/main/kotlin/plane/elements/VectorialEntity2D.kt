@@ -2,7 +2,6 @@ package plane.elements
 
 
 import extensions.equalsDelta
-import space.elements.Vector3D
 import space.elements.VectorialEntity3D
 import units.Angle
 import kotlin.math.acos
@@ -15,8 +14,8 @@ sealed class VectorialEntity2D(
 ) : Entity2D {
     val module = sqrt(x.pow(2.0) + y.pow(2.0))
 
-    infix fun angleBetween(vector3D: VectorialEntity2D): Angle.Radians {
-        return Angle.Radians(acos(this dot vector3D / (this.module * vector3D.module)))
+    infix fun angleBetween(vector2D: VectorialEntity2D): Angle.Radians {
+        return Angle.Radians(acos(this dot vector2D / (this.module * vector2D.module)))
     }
 
 //    Vector elementwise operations
@@ -35,17 +34,17 @@ sealed class VectorialEntity2D(
         )
     }
 
-    operator fun times(vector3D: Entity2D): Vector2D {
+    operator fun times(vector2D: Entity2D): Vector2D {
         return Vector2D(
-            x * vector3D.x,
-            y * vector3D.y
+            x * vector2D.x,
+            y * vector2D.y
         )
     }
 
-    operator fun div(vector3D: Entity2D): Vector2D {
+    operator fun div(vector2D: Entity2D): Vector2D {
         return Vector2D(
-            x / vector3D.x,
-            y / vector3D.y
+            x / vector2D.x,
+            y / vector2D.y
         )
     }
 
@@ -53,27 +52,9 @@ sealed class VectorialEntity2D(
 
 //    Vectorial operations
 
-    infix fun dot(vector3D: VectorialEntity2D): Double {
-        return x * vector3D.x +
-                y * vector3D.y
-    }
+    infix fun dot(vector2D: VectorialEntity2D): Double = x * vector2D.x + y * vector2D.y
 
-    infix fun cross(vector2D: VectorialEntity2D): Vector3D {
-        val (a1, a2) = this
-        val (b1, b2) = vector2D
-
-        return Vector3D(0.0, 0.0, a1 * b2 - a2 * b1)
-    }
-
-//    Component get
-
-    operator fun get(index: Int): Double {
-        return when (index) {
-            0 -> x
-            1 -> y
-            else -> throw IllegalAccessError("Index out of bounds")
-        }
-    }
+    abstract infix fun cross(vectorialEntity2D: VectorialEntity2D): VectorialEntity3D
 
 //    Scalar operations
 

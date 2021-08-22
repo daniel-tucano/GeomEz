@@ -36,6 +36,11 @@ interface Entity2D {
         )
 
     /**
+     * Rotate entity in the anti-clockwise direction along the origin
+     */
+    fun rotate(angle: Angle): Entity2D
+
+    /**
      * Rotate entity in the anti-clockwise direction along the given center of rotation
      */
     fun rotate(centerOfRotation: Point2D, angle: Angle): Entity2D
@@ -68,9 +73,17 @@ interface Entity2D {
 
     operator fun div(scalar: Double): Entity2D
 
-    // TODO("Add operations with SimpleMatrix, such as add, subtract and multiply that returns Entities2D")
-
     operator fun component1(): Double = x
 
     operator fun component2(): Double = y
+
+    //    Component get
+
+    operator fun get(index: Int): Double {
+        return when (index) {
+            0 -> x
+            1 -> y
+            else -> throw IllegalAccessError("Index out of bounds")
+        }
+    }
 }

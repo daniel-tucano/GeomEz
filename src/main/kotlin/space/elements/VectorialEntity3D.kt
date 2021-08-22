@@ -16,6 +16,8 @@ sealed class VectorialEntity3D (
 ): Entity3D {
     var module = sqrt(x.pow(2.0) + y.pow(2.0) + z.pow(2.0))
 
+    fun toPoint3D(): Point3D = Point3D(x,y,z)
+
     infix fun angleBetween(vector3D: VectorialEntity3D): Angle.Radians {
         return Angle.Radians(acos(this dot vector3D / (this.module * vector3D.module)))
     }

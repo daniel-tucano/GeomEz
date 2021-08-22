@@ -2,11 +2,10 @@ package plane
 
 import plane.elements.Point2D
 import space.CoordinateSystem3D
-import space.Curve3D
 import space.elements.Point3D
 import units.Angle
 
-data class Curve2D (override var points: List<Point2D>): Points2DList {
+class Curve2D (override var points: List<Point2D>): Points2DList {
 
     constructor(vararg points2D: Point2D) : this(points2D.toList())
 

@@ -24,18 +24,28 @@ class Direction2D(
         val MAIN_Y_DIRECTION = Direction2D(0.0, 1.0)
     }
 
-    fun toPoint3D(): Point3D = Point3D(x,y,0.0)
+    fun toPoint3D(): Point3D = Point3D(x, y, 0.0)
 
     /**
      * @return Anti-clockwise perpendicular direction
      */
-    fun perpendicularDirection(): Direction2D = Direction2D( -y, x)
+    fun perpendicularDirection(): Direction2D = Direction2D(-y, x)
 
-    override fun unaryMinus(): Direction2D {
-        return Direction2D(-x, -y)
+    /**
+     * Returns the cross product result between both vectors.
+     *
+     * If the input is an direction2D, the result will be a direction3D
+     *
+     * If the input is an vector2D, the result will be a vector3D, positioned at the origin
+     */
+    override infix fun cross(vectorialEntity2D: VectorialEntity2D): VectorialEntity3D {
+        return when (vectorialEntity2D) {
+            is Direction2D -> Direction3D(0.0, 0.0, this.x * vectorialEntity2D.y - this.y * vectorialEntity2D.x)
+            is Vector2D -> Vector3D(0.0, 0.0, this.x * vectorialEntity2D.y - this.y * vectorialEntity2D.x)
+        }
     }
 
-    fun rotate(angle: Angle): Direction2D {
+    override fun rotate(angle: Angle): Direction2D {
         val rotationMatrix = rotationMatrix2D(angle)
         val (vX, vY) = rotationMatrix * this.matrix
         return Direction2D(vX, vY)
@@ -57,14 +67,15 @@ class Direction2D(
      * When the two Coordinate Systems shares the same origin the result it's a direction, otherwise it's a vector
      */
     override fun changeBasis(asWrittenIn: CoordinateSystem2D, to: CoordinateSystem2D): VectorialEntity2D {
+        val transformationMatrix = to.affineMatrix.invert() * asWrittenIn.affineMatrix
         return when (asWrittenIn.origin) {
             to.origin -> {
-                val (newXComponent, newYComponent) = to.affineMatrix.invert() * asWrittenIn.affineMatrix * this.affineMatrix
+                val (newXComponent, newYComponent) = transformationMatrix * this.affineMatrix
                 Direction2D(newXComponent, newYComponent)
             }
             else -> {
-                val (newHeadX, newHeadY) = to.affineMatrix.invert() * asWrittenIn.affineMatrix * this.affineMatrix
-                val (newTailX, newTailY) = to.affineMatrix.invert() * asWrittenIn.affineMatrix * Point2D(
+                val (newHeadX, newHeadY) = transformationMatrix * this.affineMatrix
+                val (newTailX, newTailY) = transformationMatrix * Point2D(
                     0.0,
                     0.0
                 ).affineMatrix
@@ -79,14 +90,15 @@ class Direction2D(
      * When the two Coordinate Systems shares the same origin the result it's a direction, otherwise it's a vector
      */
     override fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): VectorialEntity3D {
+        val transformationMatrix = to.affineMatrix.invert() * asWrittenIn.affineMatrix
         return when (asWrittenIn.origin) {
             to.origin -> {
-                val (newXComponent, newYComponent, newZComponent) = to.affineMatrix.invert() * asWrittenIn.affineMatrix * this.toPoint3D().affineMatrix
-                Direction3D(newXComponent, newYComponent,newZComponent)
+                val (newXComponent, newYComponent, newZComponent) = transformationMatrix * this.toPoint3D().affineMatrix
+                Direction3D(newXComponent, newYComponent, newZComponent)
             }
             else -> {
-                val (newHeadX, newHeadY, newHeadZ) = to.affineMatrix.invert() * asWrittenIn.affineMatrix * this.toPoint3D().affineMatrix
-                val (newTailX, newTailY, newTailZ) = to.affineMatrix.invert() * asWrittenIn.affineMatrix * Point3D(
+                val (newHeadX, newHeadY, newHeadZ) = transformationMatrix * this.toPoint3D().affineMatrix
+                val (newTailX, newTailY, newTailZ) = transformationMatrix * Point3D(
                     0.0,
                     0.0,
                     0.0
@@ -96,6 +108,10 @@ class Direction2D(
                 Vector3D(headPosition = newHead, tailPosition = newTail)
             }
         }
+    }
+
+    override fun unaryMinus(): Direction2D {
+        return Direction2D(-x, -y)
     }
 
 }
