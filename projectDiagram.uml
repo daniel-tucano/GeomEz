@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>C:/Users/daniel.santiago/Documents/repositorios git/GeomEz/src/main/kotlin</OriginalElement>
+  <nodes>
+    <node x="424.74999999999994" y="0.0">plane.elements.Entity2D</node>
+    <node x="1767.425374871938" y="1006.0">space.elements.Vector3D</node>
+    <node x="1542.99273540095" y="2133.435969078886">space.CoordinateSystem3D</node>
+    <node x="1395.2806184222782" y="2713.0244947378224">utils.PolygonUtilsKt</node>
+    <node x="-18.561795659867812" y="2146.0">plane.CoordinateSystem2D</node>
+    <node x="452.28061842227817" y="2713.0244947378224">utils.RotationMatrixKt</node>
+    <node x="2047.425374871938" y="459.0">space.elements.VectorialEntity3D</node>
+    <node x="2337.425374871938" y="470.0">space.elements.Point3D</node>
+    <node x="2090.675374871938" y="1245.0">space.Points3DList</node>
+    <node x="870.5573717053173" y="2713.0244947378224">units.Angle</node>
+    <node x="269.05737170531734" y="1328.0">plane.Points2DList</node>
+    <node x="269.05737170531734" y="1765.0">plane.Curve2D</node>
+    <node x="-83.94262829468266" y="2038.5">plane.primitives.Circle</node>
+    <node x="1973.175374871938" y="2133.435969078886">space.Plane</node>
+    <node x="2305.675374871938" y="1726.0">space.Function2DInPlane</node>
+    <node x="2192.425374871938" y="984.0">space.elements.Direction3D</node>
+    <node x="2044.175374871938" y="1987.0">space.primitives.Helix</node>
+    <node x="721.0573717053173" y="1765.0">plane.Function2D</node>
+    <node x="1885.675374871938" y="1726.0">space.Curve3D</node>
+    <node x="603.25" y="481.0">plane.elements.Point2D</node>
+    <node x="1070.2806184222782" y="2713.0244947378224">utils.DoubleUtilsKt</node>
+    <node x="22.057371705317337" y="2038.5">plane.ConvexPolygon2D</node>
+    <node x="-182.94262829468266" y="1765.0">plane.Polygon2D</node>
+    <node x="1850.2806184222782" y="2713.0244947378224">extensions.DoubleExtensionsKt</node>
+    <node x="837.5573717053173" y="2026.0">plane.primitives.BezierFunction</node>
+    <node x="251.28061842227817" y="2713.0244947378224">units.AngleUtilsKt</node>
+    <node x="2159.425374871938" y="0.0">space.elements.Entity3D</node>
+    <node x="0.0" y="1028.0">plane.elements.Direction2D</node>
+    <node x="311.24999999999994" y="525.0">plane.elements.VectorialEntity2D</node>
+    <node x="2674.175374871938" y="2133.435969078886">space.ParametricCurve3D</node>
+    <node x="467.9999999999999" y="1028.0">plane.elements.Vector2D</node>
+    <node x="2191.280618422278" y="2713.0244947378224">extensions.SimpleMatrixExtensionsKt</node>
+    <node x="1046.6898575020957" y="481.0">plane.elements.PolarCoordinate</node>
+    <node x="2402.175374871938" y="2133.435969078886">space.VectorialFunction3D</node>
+    <node x="2867.3039955294776" y="470.0">space.elements.CylindricalCoordinate</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="plane.Polygon2D" target="plane.Points2DList" relationship="REALIZATION">
+      <point x="0.0" y="-72.5" />
+      <point x="33.05737170531734" y="1740.0" />
+      <point x="485.05737170531734" y="1740.0" />
+      <point x="0.0" y="193.5" />
+    </edge>
+    <edge source="plane.elements.Vector2D" target="plane.elements.VectorialEntity2D" relationship="GENERALIZATION">
+      <point x="0.0" y="-127.5" />
+      <point x="670.4999999999999" y="1003.0" />
+      <point x="447.24999999999994" y="1003.0" />
+      <point x="0.0" y="204.5" />
+    </edge>
+    <edge source="space.Curve3D" target="space.Points3DList" relationship="REALIZATION">
+      <point x="0.0" y="-105.5" />
+      <point x="2085.675374871938" y="1701.0" />
+      <point x="2300.675374871938" y="1701.0" />
+      <point x="0.0" y="215.5" />
+    </edge>
+    <edge source="plane.Function2D" target="plane.Points2DList" relationship="REALIZATION">
+      <point x="0.0" y="-105.5" />
+      <point x="937.0573717053173" y="1740.0" />
+      <point x="485.05737170531734" y="1740.0" />
+      <point x="0.0" y="193.5" />
+    </edge>
+    <edge source="plane.elements.VectorialEntity2D" target="plane.elements.Entity2D" relationship="REALIZATION">
+      <point x="0.0" y="-204.5" />
+      <point x="447.24999999999994" y="456.0" />
+      <point x="624.7499999999999" y="456.0" />
+      <point x="0.0" y="215.5" />
+    </edge>
+    <edge source="plane.primitives.BezierFunction" target="plane.Function2D" relationship="GENERALIZATION">
+      <point x="0.0" y="-28.0" />
+      <point x="0.0" y="105.5" />
+    </edge>
+    <edge source="plane.elements.Point2D" target="plane.elements.Entity2D" relationship="REALIZATION">
+      <point x="0.0" y="-248.5" />
+      <point x="802.25" y="456.0" />
+      <point x="624.7499999999999" y="456.0" />
+      <point x="0.0" y="215.5" />
+    </edge>
+    <edge source="plane.ConvexPolygon2D" target="plane.Polygon2D" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="107.05737170531734" y="2001.0" />
+      <point x="33.05737170531734" y="2001.0" />
+      <point x="0.0" y="72.5" />
+    </edge>
+    <edge source="plane.elements.Direction2D" target="plane.elements.VectorialEntity2D" relationship="GENERALIZATION">
+      <point x="0.0" y="-127.5" />
+      <point x="224.0" y="1003.0" />
+      <point x="447.24999999999994" y="1003.0" />
+      <point x="0.0" y="204.5" />
+    </edge>
+    <edge source="space.elements.VectorialEntity3D" target="space.elements.Entity3D" relationship="REALIZATION">
+      <point x="0.0" y="-237.5" />
+      <point x="2182.425374871938" y="434.0" />
+      <point x="2359.425374871938" y="434.0" />
+      <point x="0.0" y="204.5" />
+    </edge>
+    <edge source="plane.primitives.Circle" target="plane.Polygon2D" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="-40.94262829468266" y="2001.0" />
+      <point x="33.05737170531734" y="2001.0" />
+      <point x="0.0" y="72.5" />
+    </edge>
+    <edge source="space.primitives.Helix" target="space.Curve3D" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.5" />
+      <point x="0.0" y="105.5" />
+    </edge>
+    <edge source="space.elements.Point3D" target="space.elements.Entity3D" relationship="REALIZATION">
+      <point x="-1.1368683772161603E-13" y="-226.5" />
+      <point x="2536.425374871938" y="434.0" />
+      <point x="2359.425374871938" y="434.0" />
+      <point x="0.0" y="204.5" />
+    </edge>
+    <edge source="space.elements.Vector3D" target="space.elements.VectorialEntity3D" relationship="GENERALIZATION">
+      <point x="0.0" y="-83.5" />
+      <point x="1969.925374871938" y="959.0" />
+      <point x="2182.425374871938" y="959.0" />
+      <point x="0.0" y="237.5" />
+    </edge>
+    <edge source="plane.Curve2D" target="plane.Points2DList" relationship="REALIZATION">
+      <point x="0.0" y="-105.5" />
+      <point x="0.0" y="193.5" />
+    </edge>
+    <edge source="space.elements.Direction3D" target="space.elements.VectorialEntity3D" relationship="GENERALIZATION">
+      <point x="0.0" y="-105.5" />
+      <point x="2394.925374871938" y="959.0" />
+      <point x="2182.425374871938" y="959.0" />
+      <point x="0.0" y="237.5" />
+    </edge>
+    <edge source="space.Function2DInPlane" target="space.Points3DList" relationship="REALIZATION">
+      <point x="0.0" y="-105.5" />
+      <point x="2515.675374871938" y="1701.0" />
+      <point x="2300.675374871938" y="1701.0" />
+      <point x="0.0" y="215.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.6979614529280949" showDependencies="false" x="463.22818756306094" y="1793.2528277839733" />
+  <SelectedNodes>
+    <node>plane.Polygon2D</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
