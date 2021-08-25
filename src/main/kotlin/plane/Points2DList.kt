@@ -42,6 +42,11 @@ interface Points2DList {
     /**
      * Describe point as if was written in the "asWrittenIn" coordinate system in terms of the "to" coordinate system
      */
+    fun changeBasis(asWrittenIn: CoordinateSystem2D, to: CoordinateSystem2D): List<Point2D>
+
+    /**
+     * Describe point as if was written in the "asWrittenIn" coordinate system in terms of the "to" coordinate system
+     */
     fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): List<Point3D>
 
     operator fun get(index: Int) = this.points[index]

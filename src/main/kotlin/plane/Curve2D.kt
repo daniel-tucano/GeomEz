@@ -11,16 +11,18 @@ class Curve2D (override var points: List<Point2D>): Points2DList {
 
     fun concat (curve2D: Curve2D): Curve2D = Curve2D(this.points + curve2D.points)
 
-    /**
-     * Rotate points in the anti-clockwise direction along the center of rotation
-     */
+    fun rotate(angle: Angle): Curve2D {
+        return Curve2D(points.map { it.rotate(angle) })
+    }
+
     fun rotate(centerOfRotation: Point2D, angle: Angle): Curve2D {
         return Curve2D(points.map { it.rotate(centerOfRotation, angle) })
     }
 
-    /**
-     * Describe points as if was written in the "asWrittenIn" coordinate system in terms of the "to" coordinate system
-     */
+    override fun changeBasis(asWrittenIn: CoordinateSystem2D, to: CoordinateSystem2D): List<Point2D> {
+        return points.map { it.changeBasis(asWrittenIn, to) }
+    }
+
     override fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): List<Point3D> {
         return points.map { it.changeBasis(asWrittenIn, to) }
     }

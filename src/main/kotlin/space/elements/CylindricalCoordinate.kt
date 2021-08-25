@@ -1,8 +1,8 @@
 package space.elements
 
 import units.Angle
-import units.cos
-import units.sin
+import utils.cos
+import utils.sin
 
 /**
  * Represents a cylindrical coordinate with positive angle in anti-clockwise direction and 0 at x-axis

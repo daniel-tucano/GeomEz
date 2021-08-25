@@ -9,13 +9,7 @@ import space.elements.Vector3D
  * This abstraction provides an easy way to position single variable functions in 3D space without losing some important
  * features like interpolation, normal and tangent direction functions
  */
-class Function2DInPlane(val function2D: Function2D, val plane: Plane) : Points3DList {
-
-    override val points: List<Point3D>
-        get() = function2D.changeBasis(
-            asWrittenIn = plane.coordinateSystem3D,
-            to = CoordinateSystem3D.MAIN_3D_COORDINATE_SYSTEM
-        )
+class Function2DInPlane(val function2D: Function2D, val plane: Plane) {
 
     fun interpolate(x: Double): Point3D = function2D(x).changeBasis(
         asWrittenIn = plane.coordinateSystem3D,
@@ -40,7 +34,7 @@ class Function2DInPlane(val function2D: Function2D, val plane: Plane) : Points3D
         }
     }
 
-    override fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): Points3DList {
+    fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): Function2DInPlane {
         val newPlane = plane.changeBasis(asWrittenIn, to)
         return Function2DInPlane(function2D, newPlane)
     }

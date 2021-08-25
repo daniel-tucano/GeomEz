@@ -1,4 +1,6 @@
-package units
+package utils
+
+import units.Angle
 
 fun cos(angle: Angle): Double = when (angle) {
     is Angle.Radians -> kotlin.math.cos(angle.value)
