@@ -5,8 +5,6 @@ import org.ejml.simple.SimpleMatrix
 import plane.elements.Point2D
 import space.elements.Direction3D
 import space.elements.Point3D
-import units.cos
-import units.sin
 import kotlin.math.pow
 
 /**
@@ -60,8 +58,8 @@ fun rotationMatrix3D(axis: Direction3D, angle: Angle, centerOfRotation: Point3D)
     return SimpleMatrix(
         arrayOf(
             doubleArrayOf(a1,a2,a3,  xCR * (1-a1) - yCR * a2     - zCR * a3     ),
-            doubleArrayOf(b1,b2,b3, -xCR * b1     - yCR * (1-b2) - zCR * b3     ),
-            doubleArrayOf(c1,c2,c3,  xCR * c1     - yCR * c2     - zCR * (1-c3) ),
+            doubleArrayOf(b1,b2,b3, -xCR * b1     + yCR * (1-b2) - zCR * b3     ),
+            doubleArrayOf(c1,c2,c3, -xCR * c1     - yCR * c2     + zCR * (1-c3) ),
             doubleArrayOf(0.0, 0.0, 0.0, 1.0)
         )
     )
@@ -106,7 +104,7 @@ fun rotationMatrix2D(angle: Angle, centerOfRotation: Point2D): SimpleMatrix {
     return SimpleMatrix(
         arrayOf(
             doubleArrayOf( cos(angle) , sin(angle), xCR * (1 - cos(angle))  - yCR * sin(angle)          ),
-            doubleArrayOf(-sin(angle) , cos(angle), xCR * sin(angle)        + yCR * (1 - cos(angle))    ),
+            doubleArrayOf(-sin(angle) , cos(angle),-xCR * sin(angle)        + yCR * (1 - cos(angle))    ),
             doubleArrayOf(    0.0     ,    0.0    ,                       1.0                           )
         )
     )
