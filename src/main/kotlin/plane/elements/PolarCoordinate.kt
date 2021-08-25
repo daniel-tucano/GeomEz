@@ -1,8 +1,8 @@
 package plane.elements
 
 import units.Angle
-import units.cos
-import units.sin
+import utils.cos
+import utils.sin
 
 class PolarCoordinate(val radius: Double, val angle: Angle) {
 
