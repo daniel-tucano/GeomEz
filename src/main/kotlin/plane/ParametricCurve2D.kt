@@ -1,6 +1,7 @@
 package plane
 
 import plane.elements.Point2D
+import plane.functions.Function2D
 import utils.linspace
 
 open class ParametricCurve2D(

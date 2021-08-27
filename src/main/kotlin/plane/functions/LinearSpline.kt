@@ -1,9 +1,10 @@
-package plane
+package plane.functions
 
+import plane.CoordinateSystem2D
+import plane.Points2DList
 import plane.elements.Point2D
 import space.CoordinateSystem3D
 import space.elements.Point3D
-import java.lang.IllegalArgumentException
 
 class LinearSpline(override val points: List<Point2D>) : Points2DList, Function2D {
 

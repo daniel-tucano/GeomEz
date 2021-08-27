@@ -1,8 +1,7 @@
-package plane.primitives
+package plane
 
-import plane.ParametricCurve2D
-import plane.Polynomial
 import plane.elements.Point2D
+import plane.functions.Polynomial
 import utils.factorial
 import kotlin.math.pow
 

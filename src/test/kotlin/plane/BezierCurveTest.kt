@@ -1,4 +1,4 @@
-package plane.primitives
+package plane
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

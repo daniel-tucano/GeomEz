@@ -1,4 +1,4 @@
-package plane
+package plane.functions
 
 import extensions.equalsDelta
 import plane.elements.Point2D
@@ -88,6 +88,14 @@ class Polynomial(coefficients: List<Double>) : Function2D {
             }
         }
         return Polynomial(newCoefficients)
+    }
+
+    infix fun pow (exponent: Int): Polynomial {
+        if (exponent < 1) throw IllegalArgumentException("Exponent must be greater then 1")
+        return when(exponent) {
+            1 -> this
+            else -> (2..exponent).fold(this) { acc, _ -> acc * this  }
+        }
     }
 
     // Scalar operations

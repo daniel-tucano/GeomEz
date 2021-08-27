@@ -1,4 +1,4 @@
-package plane
+package plane.functions
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test

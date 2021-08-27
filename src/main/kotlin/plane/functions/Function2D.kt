@@ -1,12 +1,7 @@
-package plane
+package plane.functions
 
 import plane.elements.Direction2D
 import plane.elements.Point2D
-import space.CoordinateSystem3D
-import space.Curve3D
-import space.elements.Direction3D
-import space.elements.Point3D
-import java.lang.IllegalArgumentException
 
 /**
  * Functions are a set of points that satisfies the condition of ascending x values

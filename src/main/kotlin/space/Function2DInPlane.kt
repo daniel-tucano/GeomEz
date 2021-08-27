@@ -1,6 +1,6 @@
 package space
 
-import plane.Function2D
+import plane.functions.Function2D
 import space.elements.Direction3D
 import space.elements.Point3D
 import space.elements.Vector3D

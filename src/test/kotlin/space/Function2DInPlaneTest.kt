@@ -2,8 +2,8 @@ package space
 
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import plane.LinearSpline
 import plane.elements.Point2D
+import plane.functions.LinearSpline
 import space.elements.Direction3D
 import space.elements.Direction3D.Companion.MAIN_Y_DIRECTION
 import space.elements.Direction3D.Companion.MAIN_Z_DIRECTION
