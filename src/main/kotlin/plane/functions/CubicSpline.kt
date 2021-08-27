@@ -31,7 +31,7 @@ class CubicSpline(
     }
 
     /**
-     * @see https://mathworld.wolfram.com/CubicSpline.html
+     * Taken from: https://mathworld.wolfram.com/CubicSpline.html
      */
     private fun calculateCList(points: List<Point2D>): List<Double> {
         val n = points.lastIndex
@@ -87,7 +87,7 @@ class CubicSpline(
     }
 
     /**
-     * @see Burden, R. L.; Faires, J. D.; and Reynolds, A. C. Numerical Analysis, 9th ed. Boston, MA: Brooks/Cole pp 149-150
+     * Taken from: Burden, R. L.; Faires, J. D.; and Reynolds, A. C. Numerical Analysis, 9th ed. Boston, MA: Brooks/Cole pp 149-150
      */
     private fun calculateCubicSplinePolynomials(points: List<Point2D>): List<Polynomial> {
         val n = points.lastIndex
@@ -118,7 +118,7 @@ class CubicSpline(
         val startPointPreviousXIndex = previousXInRangeIndex(xStart)
         val endPointPreviousXIndex = previousXInRangeIndex(xEnd)
         return (startPointPreviousXIndex..endPointPreviousXIndex).fold(0.0) { acc, i ->
-            when (i) {
+            acc + when (i) {
                 startPointPreviousXIndex -> polynomials[i].integrate(xStart, xPoints[i + 1])
                 endPointPreviousXIndex -> polynomials[i].integrate(xPoints[i], xEnd)
                 else -> polynomials[i].integrate(xPoints[i], xPoints[i+1])
