@@ -9,6 +9,10 @@ operator fun SimpleMatrix.times(matrix: SimpleMatrix): SimpleMatrix {
     return this.mult(matrix)
 }
 
+fun SimpleMatrix.toList(): List<Double> {
+    return MutableList(this.numElements) {0.0}.mapIndexed {index, _ -> this.get(index) }
+}
+
 operator fun SimpleMatrix.component1(): Double {
     return this[0]
 }
