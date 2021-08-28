@@ -11,7 +11,7 @@ fun linspace(start: Double, stop: Double, num: Int): List<Double> {
     val increment = (stop - start)/(num - 1)
 
     for (i in 0 until num) {
-        array[i] = stop + i * increment
+        array[i] = start + i * increment
     }
 
     return  array.toList()
