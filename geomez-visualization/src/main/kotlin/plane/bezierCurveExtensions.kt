@@ -5,19 +5,24 @@ import io.github.danielTucano.matplotlib.pyplot.figure
 import io.github.danielTucano.matplotlib.pyplot.grid
 import io.github.danielTucano.matplotlib.pyplot.subplots
 import io.github.danielTucano.python.pythonExecution
-import plane.elements.Point2D
 import plane.elements.xValues
 import plane.elements.yValues
+import utils.linspace
 
-fun List<Point2D>.plot(kwargs: Map<Line2D.Line2DArgs, KwargValue>? = null) {
+fun BezierCurve.plot(tList: List<Double> = linspace(0.0, 1.0, 100)) {
     pythonExecution {
-        this.addPlotCommands(kwargs = kwargs)
+        val (_, ax) = this.addPlotCommands(tList = tList)
+        ax.set_aspect(AxesBase.AspectOptions.equal, AxesBase.AjustableOptions.datalim)
         grid()
         show()
     }
 }
 
-fun List<Point2D>.addPlotCommands(figure: Figure? = null, axes: Axes? = null, kwargs: Map<Line2D.Line2DArgs, KwargValue>? = null): Pair<Figure, Axes> {
+fun BezierCurve.addPlotCommands(
+    figure: Figure? = null,
+    axes: Axes? = null,
+    tList: List<Double> = linspace(0.0, 1.0, 100)
+): Pair<Figure, Axes> {
     lateinit var fig: Figure
     lateinit var ax: Axes
     when {
@@ -39,6 +44,13 @@ fun List<Point2D>.addPlotCommands(figure: Figure? = null, axes: Axes? = null, kw
             ax = axes!!
         }
     }
-    ax.plot(x = this.xValues, y = this.yValues, kwargs = kwargs)
+    ax.plot(
+        controlPoints.map { it.x },
+        controlPoints.map { it.y },
+        "o",
+        kwargs = mapOf(Line2D.Line2DArgs.linestyle to KwargValue.Quoted("--"))
+    )
+    val points = this(tList)
+    ax.plot(points.xValues, points.yValues)
     return fig to ax
 }

@@ -1,23 +1,26 @@
 package plane
 
-import io.github.danielTucano.matplotlib.*
+import io.github.danielTucano.matplotlib.Axes
+import io.github.danielTucano.matplotlib.AxesBase
+import io.github.danielTucano.matplotlib.Figure
 import io.github.danielTucano.matplotlib.pyplot.figure
 import io.github.danielTucano.matplotlib.pyplot.grid
 import io.github.danielTucano.matplotlib.pyplot.subplots
+import io.github.danielTucano.matplotlib.show
 import io.github.danielTucano.python.pythonExecution
-import plane.elements.Point2D
 import plane.elements.xValues
 import plane.elements.yValues
 
-fun List<Point2D>.plot(kwargs: Map<Line2D.Line2DArgs, KwargValue>? = null) {
+fun Polygon2D.plot() {
     pythonExecution {
-        this.addPlotCommands(kwargs = kwargs)
+        val (_, ax) = this.addPlotCommands()
+        ax.set_aspect(AxesBase.AspectOptions.equal, AxesBase.AjustableOptions.datalim)
         grid()
         show()
     }
 }
 
-fun List<Point2D>.addPlotCommands(figure: Figure? = null, axes: Axes? = null, kwargs: Map<Line2D.Line2DArgs, KwargValue>? = null): Pair<Figure, Axes> {
+fun Polygon2D.addPlotCommands(figure: Figure? = null, axes: Axes? = null): Pair<Figure, Axes> {
     lateinit var fig: Figure
     lateinit var ax: Axes
     when {
@@ -39,6 +42,6 @@ fun List<Point2D>.addPlotCommands(figure: Figure? = null, axes: Axes? = null, kw
             ax = axes!!
         }
     }
-    ax.plot(x = this.xValues, y = this.yValues, kwargs = kwargs)
+    ax.plot(pointsClosedPolygon.xValues, pointsClosedPolygon.yValues)
     return fig to ax
 }

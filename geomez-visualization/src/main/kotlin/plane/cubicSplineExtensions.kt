@@ -1,23 +1,24 @@
 package plane
 
-import io.github.danielTucano.matplotlib.*
+import io.github.danielTucano.matplotlib.Axes
+import io.github.danielTucano.matplotlib.Figure
 import io.github.danielTucano.matplotlib.pyplot.figure
 import io.github.danielTucano.matplotlib.pyplot.grid
 import io.github.danielTucano.matplotlib.pyplot.subplots
+import io.github.danielTucano.matplotlib.show
 import io.github.danielTucano.python.pythonExecution
-import plane.elements.Point2D
-import plane.elements.xValues
-import plane.elements.yValues
+import plane.functions.CubicSpline
+import utils.linspace
 
-fun List<Point2D>.plot(kwargs: Map<Line2D.Line2DArgs, KwargValue>? = null) {
+fun CubicSpline.plot() {
     pythonExecution {
-        this.addPlotCommands(kwargs = kwargs)
+        this.addPlotCommands()
         grid()
         show()
     }
 }
 
-fun List<Point2D>.addPlotCommands(figure: Figure? = null, axes: Axes? = null, kwargs: Map<Line2D.Line2DArgs, KwargValue>? = null): Pair<Figure, Axes> {
+fun CubicSpline.addPlotCommands(figure: Figure? = null, axes: Axes? = null, nPoints: Int = 100): Pair<Figure, Axes> {
     lateinit var fig: Figure
     lateinit var ax: Axes
     when {
@@ -39,6 +40,7 @@ fun List<Point2D>.addPlotCommands(figure: Figure? = null, axes: Axes? = null, kw
             ax = axes!!
         }
     }
-    ax.plot(x = this.xValues, y = this.yValues, kwargs = kwargs)
+    this(linspace(this.xPoints.first(), this.xPoints.last(), nPoints))
+    ax.plot(this.xPoints, this.yPoints, "o")
     return fig to ax
 }
