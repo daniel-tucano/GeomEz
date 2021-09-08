@@ -25,6 +25,30 @@ operator fun SimpleMatrix.component3(): Double {
     return this[2]
 }
 
+fun SimpleMatrix.onEach(transform: (element: Double) -> Double) {
+    (0 until this.numElements).forEach {
+        this[it] = transform(this[it])
+    }
+}
+
+fun SimpleMatrix.onEachIndexed(transform: (index: Int, element: Double) -> Double) {
+    (0 until this.numElements).forEach {
+        this[it] = transform(it,this[it])
+    }
+}
+
+fun SimpleMatrix.map(transform: (element: Double) -> Double): SimpleMatrix {
+    val newMatrix = this.copy()
+    newMatrix.onEach(transform)
+    return newMatrix
+}
+
+fun SimpleMatrix.mapIndexed(transform: (index: Int, element: Double) -> Double): SimpleMatrix {
+    val newMatrix = this.copy()
+    newMatrix.onEachIndexed(transform)
+    return newMatrix
+}
+
 /**
  * When multiplying a 2x2 or 3x3 matrix by a point2D returns a point2D equivalent to that transformation
  */
