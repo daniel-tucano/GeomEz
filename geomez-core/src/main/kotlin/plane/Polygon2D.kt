@@ -22,6 +22,8 @@ open class Polygon2D(override var points: List<Point2D>) : Points2DList {
             }.absoluteValue / 2
         }
 
+    val pointsClosedPolygon = listOf(*points.toTypedArray(), points.first())
+
     fun rotate(angle: Angle): Polygon2D {
         return Polygon2D(points.map { it.rotate(angle) })
     }
