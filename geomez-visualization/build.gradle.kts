@@ -1,17 +1,84 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URI
 
 plugins {
+    `java-library`
+    `maven-publish`
+    signing
     kotlin("jvm") version "1.5.21"
-    id("org.openjfx.javafxplugin") version "0.0.10"
 }
 
-group = "me.daanr"
-version = "1.0-SNAPSHOT"
-
+group = "io.github.daniel-tucano"
+version = "0.1.0-SNAPSHOT"
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
-    maven("http://maven.jzy3d.org/releases/")
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+val ossrhUsername: String by project
+val ossrhPassword: String by project
+
+publishing {
+    publications {
+        create<MavenPublication>("geomez-visualization-mavenKotlin") {
+            artifactId = "geomez-visualization"
+            from(components["java"])
+            versionMapping {
+                usage("java-api") {
+                    fromResolutionOf("runtimeClasspath")
+                }
+                usage("java-runtime") {
+                    fromResolutionResult()
+                }
+            }
+
+            pom {
+                name.set("geomez-visualization")
+                description.set("Visualization tools to geomez")
+                url.set("https://github.com/daniel-tucano/GeomEz")
+
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://opensource.org/licenses/MIT")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("daniel-tucano")
+                        name.set("Daniel Ribeiro Santiago")
+                        email.set("daanrsantiago@gmail.com")
+                    }
+                }
+                scm {
+                    url.set("https://github.com/daniel-tucano/GeomEz")
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            // change URLs to point to your repos, e.g. http://my.org/repo
+            val releasesRepoUrl = URI("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            val snapshotsRepoUrl = URI("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
+
+            credentials {
+                username = ossrhUsername
+                password = ossrhPassword
+            }
+        }
+    }
+}
+
+signing {
+    sign(publishing.publications["geomez-visualization-mavenKotlin"])
 }
 
 dependencies {
@@ -19,15 +86,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
 
-
-    implementation("org.jetbrains.lets-plot:lets-plot-jfx:2.1.0")
-    implementation("org.jetbrains.lets-plot:lets-plot-kotlin-jvm:3.0.3-alpha1")
-
-    implementation("org.jzy3d:jzy3d-api:1.0.2")
-
-    implementation("com.github.sh0nk:matplotlib4j:0.5.0")
-
-    implementation("org.slf4j:slf4j-simple:1.7.30")
+    implementation("org.ejml:ejml-simple:0.41")
+    implementation("io.github.daniel-tucano:matplotlib4k:0.2.7")
 
     implementation(project(":geomez-core"))
 }
