@@ -1,5 +1,7 @@
 package utils
 
+import org.ejml.simple.SimpleMatrix
+
 /**
  * Creates a list of Doubles equally spaced with "num" number of elements, witch includes "start" and "stop" elements
  */
@@ -25,4 +27,20 @@ fun factorial(number: Int): Long {
         1 -> number.toLong()
         else -> number * factorial(number - 1)
     }
+}
+
+fun meshgrid(xValues: List<Double>, yValues: List<Double>): Pair<SimpleMatrix, SimpleMatrix> {
+    val X = SimpleMatrix(
+        yValues.map {
+            xValues.toDoubleArray()
+        }.toTypedArray()
+    )
+
+    val Y = SimpleMatrix(
+        yValues.mapIndexed { index, _ ->
+            DoubleArray(xValues.size) {yValues[index]}
+        }.toTypedArray()
+    )
+
+    return X to Y
 }
