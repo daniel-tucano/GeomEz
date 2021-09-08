@@ -12,11 +12,11 @@ interface Points3DList {
             } else acc
         }
 
-    val xPoints: List<Double>
+    val xValues: List<Double>
         get() = points.map { it.x }
-    val yPoints: List<Double>
+    val yValues: List<Double>
         get() = points.map { it.y }
-    val zPoints: List<Double>
+    val zValues: List<Double>
         get() = points.map { it.z }
 
     val minX: Double
@@ -35,7 +35,7 @@ interface Points3DList {
         get() = this.points.maxOf { it.z }
 
     val centroid: Point3D
-        get() = Point3D(xPoints.average(), yPoints.average(), zPoints.average())
+        get() = Point3D(xValues.average(), yValues.average(), zValues.average())
 
     operator fun get(index: Int) = this.points[index]
 
