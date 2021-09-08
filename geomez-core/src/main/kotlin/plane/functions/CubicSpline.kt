@@ -1,13 +1,13 @@
 package plane.functions
 
 import extensions.times
-import extensions.toList
 import org.ejml.simple.SimpleMatrix
 import plane.CoordinateSystem2D
 import plane.Points2DList
 import plane.elements.Point2D
 import space.CoordinateSystem3D
 import space.elements.Point3D
+import kotlin.math.ceil
 import kotlin.math.pow
 
 /**
@@ -30,50 +30,6 @@ class CubicSpline(
         }
     }
 
-    /**
-     * Taken from: https://mathworld.wolfram.com/CubicSpline.html
-     */
-    private fun calculateCList(points: List<Point2D>): List<Double> {
-        val n = points.lastIndex
-        val theta = MutableList(n + 2) { 0.0 }
-        (0..n + 1).forEach { i ->
-            theta[i] = when (i) {
-                0 -> 1.0
-                1 -> 2.0
-                n + 1 -> 2 * theta[i - 1] - theta[i - 2]
-                else -> 4 * theta[i - 1] - theta[i - 2]
-            }
-        }
-        val psi = theta.reversed()
-        val inverseMatrixArray = Array(n + 1) { DoubleArray(n + 1) { 0.0 } }
-        for (i in 0..n) {
-            for (j in 0..n) {
-                inverseMatrixArray[i][j] = when {
-                    i == j -> {
-                        theta[i] * psi[j + 1] / theta[n + 1]
-                    }
-                    i < j -> {
-                        (-1.0).pow(i + j) * theta[i] * psi[j + 1] / theta[n + 1]
-                    }
-                    else -> {
-                        (-1.0).pow(i + j) * theta[j] * psi[i + 1] / theta[n + 1]
-                    }
-                }
-            }
-        }
-        val inverseMatrix = SimpleMatrix(inverseMatrixArray)
-        val y = SimpleMatrix(
-            Array(n + 1) { DoubleArray(1) { 0.0 } }.onEachIndexed { line, doubles ->
-                doubles[0] = when (line) {
-                    0 -> 3 * (points[1].y - points[0].y)
-                    n -> 3 * (points[n].y - points[n - 1].y)
-                    else -> 3 * (points[line + 1].y - points[line - 1].y)
-                }
-            }
-        )
-        return (inverseMatrix * y).toList()
-    }
-
     private fun previousXInRangeIndex(x: Double): Int {
         if (!inXRange(x)) {
             throw java.lang.IllegalArgumentException("X value out of function range")
@@ -87,26 +43,81 @@ class CubicSpline(
     }
 
     /**
-     * Taken from: Burden, R. L.; Faires, J. D.; and Reynolds, A. C. Numerical Analysis, 9th ed. Boston, MA: Brooks/Cole pp 149-150
+     * Taken from: https://timodenk.com/blog/cubic-spline-interpolation/
      */
     private fun calculateCubicSplinePolynomials(points: List<Point2D>): List<Polynomial> {
         val n = points.lastIndex
-        val h = (0..n - 1).map { i -> points[i + 1].x - points[i].x }
-        val a = points.map { it.y }
-        val c = calculateCList(points)
-        val b = (0..n - 1).map { i ->
-            (a[i + 1] - a[i]) / h[i] - h[i] * (c[i + 1] + 2 * c[i]) / 3
+        val coefficientsMatrix = SimpleMatrix(4 * n, 4 * n)
+        val resultColumn = SimpleMatrix(4 * n, 1)
+        (0 until 4 * n).forEach { index ->
+            when {
+                (index in (0 until 2 * n)) -> {
+                    val pointIndex = when {
+                        (index == 0) -> 0
+                        (index == (2 * n - 1)) -> n
+                        else -> ceil(index / 2.0).toInt()
+                    }
+                    val firstColumnWrittenInRowIndex = index.floorDiv(2) * 4
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex] = 1.0
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex + 1] = points[pointIndex].x
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex + 2] = points[pointIndex].x.pow(2)
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex + 3] = points[pointIndex].x.pow(3)
+                    resultColumn[index] = points[pointIndex].y
+                }
+                (index in (2 * n until (2 * n + 2 * (n - 2)))) -> {
+                    val pointIndex = index - 2 * n + 1
+                    val firstColumnWrittenInRowIndex = (index - 2 * n) * 4
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex] = 0.0
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex + 1] = 1.0
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex + 2] = 2.0 * points[pointIndex].x
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex + 3] = 3.0 * points[pointIndex].x.pow(2)
+
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex + 4] = 0.0
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex + 5] = -1.0
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex + 6] = -2.0 * points[pointIndex].x
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex + 7] = -3.0 * points[pointIndex].x.pow(2)
+                    resultColumn[index] = 0.0
+                }
+                (index in ((2 * n + 2 * (n - 2)) until (4 * n - 2))) -> {
+                    val pointIndex = index - 2 * n - 2 * (n - 2) + 1
+                    val firstColumnWrittenInRowIndex = (index - 2 * n - 2 * (n - 2)) * 4
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex] = 0.0
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex + 1] = 0.0
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex + 2] = 2.0
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex + 3] = 6.0 * points[pointIndex].x
+
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex + 4] = 0.0
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex + 5] = 0.0
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex + 6] = -2.0
+                    coefficientsMatrix[index, firstColumnWrittenInRowIndex + 7] = -6.0 * points[pointIndex].x
+                    resultColumn[index] = 0.0
+                }
+                (index == (4 * n - 2)) -> {
+                    coefficientsMatrix[index, 0] = 0.0
+                    coefficientsMatrix[index, 1] = 0.0
+                    coefficientsMatrix[index, 2] = 2.0
+                    coefficientsMatrix[index, 3] = 6.0 * points[0].x
+                    resultColumn[index] = 0.0
+                }
+                else -> {
+                    coefficientsMatrix[index, n * 4 - 4] = 0.0
+                    coefficientsMatrix[index, n * 4 - 3] = 0.0
+                    coefficientsMatrix[index, n * 4 - 2] = 2.0
+                    coefficientsMatrix[index, n * 4 - 1] = 6.0 * points[n].x
+                    resultColumn[index] = 0.0
+                }
+            }
         }
-        val d = (0..n - 1).map { i -> (c[i + 1] - c[i]) / (3 * h[i]) }
-        return (0..n - 1).map { i ->
-            Polynomial(listOf(-points[i].x, 1.0)) * b[i] + Polynomial(
-                listOf(
-                    -points[i].x,
-                    1.0
-                )
-            ).pow(2) * c[i] + Polynomial(
-                listOf(-points[i].x, 1.0)
-            ).pow(3) * d[i] + a[i]
+        val coefficientsResults = coefficientsMatrix.invert() * resultColumn
+        return (0 until n).map { index ->
+            val firstPolynomialCoefficient = 4 * index
+            val polynomialCoefficients = listOf(
+                coefficientsResults[firstPolynomialCoefficient],
+                coefficientsResults[firstPolynomialCoefficient + 1],
+                coefficientsResults[firstPolynomialCoefficient + 2],
+                coefficientsResults[firstPolynomialCoefficient + 3]
+            )
+            Polynomial(polynomialCoefficients)
         }
     }
 
@@ -121,12 +132,12 @@ class CubicSpline(
             acc + when (i) {
                 startPointPreviousXIndex -> polynomials[i].integrate(xStart, xPoints[i + 1])
                 endPointPreviousXIndex -> polynomials[i].integrate(xPoints[i], xEnd)
-                else -> polynomials[i].integrate(xPoints[i], xPoints[i+1])
+                else -> polynomials[i].integrate(xPoints[i], xPoints[i + 1])
             }
         }
     }
 
-    override fun invoke(x: Double): Point2D = polynomials[previousXInRangeIndex(x)](x)
+    override fun invoke(x: Double): Double = polynomials[previousXInRangeIndex(x)](x)
 
     override fun changeBasis(asWrittenIn: CoordinateSystem2D, to: CoordinateSystem2D): List<Point2D> {
         return points.map { it.changeBasis(asWrittenIn, to) }

@@ -1,7 +1,6 @@
 package plane.functions
 
 import extensions.equalsDelta
-import plane.elements.Point2D
 import kotlin.math.max
 import kotlin.math.pow
 
@@ -39,7 +38,7 @@ class Polynomial(coefficients: List<Double>) : Function2D {
         return Polynomial(newCoefficients)
     }
 
-    override fun derivative(x: Double): Double = derivative()(x).y
+    override fun derivative(x: Double): Double = derivative()(x)
 
     /**
      * Integral polynomial
@@ -54,12 +53,11 @@ class Polynomial(coefficients: List<Double>) : Function2D {
 
     override fun integrate(xStart: Double, xEnd: Double): Double {
         val integralPolynomial = integral()
-        return (integralPolynomial(xEnd) - integralPolynomial(xStart)).y
+        return integralPolynomial(xEnd) - integralPolynomial(xStart)
     }
 
-    override fun invoke(x: Double): Point2D {
-        val y = coefficients.reduceIndexed { index, acc, coeff -> acc + x.pow(index) * coeff }
-        return Point2D(x, y)
+    override fun invoke(x: Double): Double {
+        return  coefficients.reduceIndexed { index, acc, coeff -> acc + x.pow(index) * coeff }
     }
 
     // Polynomial operations

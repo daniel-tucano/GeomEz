@@ -22,12 +22,12 @@ class LinearSpline(override val points: List<Point2D>) : Points2DList, Function2
     /**
      * Get Y value interpolating linearly along provided points
      */
-    private fun interpolate(x: Double): Point2D {
+    private fun interpolate(x: Double): Double {
         if (!inXRange(x)) {
             throw IllegalArgumentException("X value out of function range")
         }
         // Finding indexes of the points where the provided x would be between
-        val nextXIndex = xPoints.indexOfFirst { it > x }
+        val nextXIndex = if (x < xPoints.last()) xPoints.indexOfFirst { it > x } else xPoints.lastIndex
         val previousXIndex = nextXIndex - 1
 
         /**
@@ -37,7 +37,7 @@ class LinearSpline(override val points: List<Point2D>) : Points2DList, Function2
          */
         val fractionOfNextX = (x - xPoints[previousXIndex]) / (xPoints[nextXIndex] - xPoints[previousXIndex])
 
-        return points[nextXIndex] * fractionOfNextX + points[previousXIndex] * (1 - fractionOfNextX)
+        return points[nextXIndex].y * fractionOfNextX + points[previousXIndex].y * (1 - fractionOfNextX)
     }
 
     /**
@@ -61,8 +61,10 @@ class LinearSpline(override val points: List<Point2D>) : Points2DList, Function2
             throw IllegalArgumentException("X value out of function range")
         }
         val integrationPoints =
-            listOf(this.interpolate(xStart)) + this.points.filter { it.x > xStart && it.x < xEnd } + this.interpolate(
-                xEnd
+            listOf(
+                Point2D(xStart,this(xStart)),
+                *this.points.filter { it.x > xStart && it.x < xEnd }.toTypedArray(),
+                Point2D(xStart,this(xEnd))
             )
         return integrationPoints.foldRightIndexed(0.0) { index, point2D, acc ->
             when (index) {
@@ -80,7 +82,7 @@ class LinearSpline(override val points: List<Point2D>) : Points2DList, Function2
         return points.map { it.changeBasis(asWrittenIn, to) }
     }
 
-    override operator fun invoke(x: Double): Point2D {
+    override operator fun invoke(x: Double): Double {
         return interpolate(x)
     }
 }

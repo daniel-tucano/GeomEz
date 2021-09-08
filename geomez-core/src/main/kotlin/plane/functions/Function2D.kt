@@ -1,7 +1,6 @@
 package plane.functions
 
 import plane.elements.Direction2D
-import plane.elements.Point2D
 
 /**
  * Functions are a set of points that satisfies the condition of ascending x values
@@ -32,19 +31,19 @@ interface Function2D {
     /**
      * Evaluate that function at given x value
      */
-    operator fun invoke(x: Double): Point2D
+    operator fun invoke(x: Double): Double
 
     /**
      * Evaluate that function at given x values
      */
-    operator fun invoke(xArray: DoubleArray): List<Point2D> {
-        return xArray.map { x -> this(x) }
+    operator fun invoke(xArray: DoubleArray): List<Double> {
+        return xArray.map { x -> this.invoke(x) }
     }
 
     /**
      * Evaluate that function at given x values
      */
-    operator fun invoke(xCollection: Collection<Double>): List<Point2D> {
+    operator fun invoke(xCollection: Collection<Double>): List<Double> {
         return xCollection.map { x -> this(x) }
     }
 }
