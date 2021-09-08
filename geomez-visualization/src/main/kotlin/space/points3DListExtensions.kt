@@ -1,34 +1,51 @@
 package plane
 
 
-import org.jzy3d.chart.AWTChart
-import org.jzy3d.chart.ChartLauncher
-import org.jzy3d.colors.Color
-import org.jzy3d.plot3d.primitives.LineStrip
-import org.jzy3d.plot3d.rendering.canvas.Quality
+import extensions.xValues
+import extensions.yValues
+import extensions.zValues
+import io.github.danielTucano.matplotlib.*
+import io.github.danielTucano.matplotlib.pyplot.figure
+import io.github.danielTucano.python.pythonExecution
 import space.Points3DList
 import space.elements.Point3D
-import space.toCoord3D
-import space.toPlotPoint
 
-fun List<Point3D>.plot(width: Double = 1.0, color: Color = Color.BLUE) {
-    val chart = AWTChart(Quality.Fastest)
-
-    this.forEach { point3D ->
-        chart.scene.graph.add(point3D.toPlotPoint(color = color, width = width))
+fun List<Point3D>.plot(kwargs: Map<Line2D.Line2DArgs, KwargValue>? = null) {
+    pythonExecution {
+        this.addPlotCommands(kwargs = kwargs)
+        show()
     }
-
-    ChartLauncher.openChart(chart)
 }
 
-fun Points3DList.plot(width: Double = 1.0, color: Color = Color.BLUE) {
-    val chart = AWTChart(Quality.Fastest)
+fun Points3DList.plot(kwargs: Map<Line2D.Line2DArgs, KwargValue>? = null) {
+    pythonExecution {
+        this.addPlotCommands(kwargs = kwargs)
+        show()
+    }
+}
 
-    val lines = LineStrip()
-    lines.addAll(this.points.map { it.toPlotPoint(color = color, width = width) })
-    lines.wireframeWidth = width.toFloat()
+fun List<Point3D>.addPlotCommands(figure: Figure? = null, axes: Axes3D? = null, kwargs: Map<Line2D.Line2DArgs, KwargValue>? = null): Pair<Figure, Axes3D> {
+    val fig = when(figure) {
+        null -> figure()
+        else -> figure
+    }
+    val ax = when(axes) {
+        null -> fig.add_subplot(projection = Figure.AddSubplotProjectionOptions.`3d`) as Axes3D
+        else -> axes
+    }
+    ax.plot(xValues,yValues,zValues, kwargs = kwargs)
+    return fig to ax
+}
 
-    chart.add(lines)
-
-    ChartLauncher.openChart(chart)
+fun Points3DList.addPlotCommands(figure: Figure? = null, axes: Axes3D? = null, kwargs: Map<Line2D.Line2DArgs, KwargValue>? = null): Pair<Figure, Axes3D> {
+    val fig = when(figure) {
+        null -> figure()
+        else -> figure
+    }
+    val ax = when(axes) {
+        null -> fig.add_subplot(projection = Figure.AddSubplotProjectionOptions.`3d`) as Axes3D
+        else -> axes
+    }
+    ax.plot(xValues,yValues,zValues, kwargs = kwargs)
+    return fig to ax
 }
