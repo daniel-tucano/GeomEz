@@ -9,14 +9,14 @@ import units.Angle
  * Represents a Helix that start at Z = 0 and grows towards z direction
  */
 class Helix(
-    nPoints: UInt,
+    nPoints: UInt = 100.toUInt(),
     radius: Double,
     zDistance: Double,
     turns: Double = 1.0,
     /**
      * Positive in the anti-clockwise direction
      */
-    startingAngle: Angle,
+    startingAngle: Angle = Angle.Degrees(0.0),
     antiClockwise: Boolean = true
 ) : Curve3D(
     constructHelixPoints(nPoints.toInt(), radius, zDistance, turns, startingAngle, antiClockwise)
