@@ -7,11 +7,11 @@ import utils.linspace
 open class ParametricCurve2D(
     val xParametricFunction: Function2D,
     val yParametricFunction: Function2D
-) : Function2D {
+) {
 
-    override fun derivative(x: Double): Double = yParametricFunction.derivative(x) / xParametricFunction.derivative(x)
+    fun derivative(x: Double): Double = yParametricFunction.derivative(x) / xParametricFunction.derivative(x)
 
-    override fun integrate(xStart: Double, xEnd: Double): Double = integrate(xStart,xEnd,200.toUInt())
+    fun integrate(xStart: Double, xEnd: Double): Double = integrate(xStart,xEnd,200.toUInt())
 
     /**
      * @param nPoints Number of points used to perform numerical integration mathod
@@ -23,13 +23,17 @@ open class ParametricCurve2D(
         return tVec.foldRightIndexed(0.0) { index, t, acc ->
             when (index) {
                 tVec.lastIndex -> acc
-                else -> acc + (yParametricFunction(tVec[index + 1]).y * xParametricFunction.derivative(tVec[index + 1])
-                        + yParametricFunction(t).y * xParametricFunction.derivative(t)) / 2 * dt
+                else -> acc + (yParametricFunction(tVec[index + 1]) * xParametricFunction.derivative(tVec[index + 1])
+                        + yParametricFunction(t) * xParametricFunction.derivative(t)) / 2 * dt
             }
         }
     }
 
-    override fun invoke(x: Double): Point2D {
-        return Point2D(xParametricFunction(x).y, yParametricFunction(x).y)
+    operator fun invoke(x: Double): Point2D {
+        return Point2D(xParametricFunction(x), yParametricFunction(x))
+    }
+
+    operator fun invoke(xCollection: Collection<Double>): List<Point2D> {
+        return xCollection.map { x -> Point2D(xParametricFunction(x), yParametricFunction(x)) }
     }
 }
