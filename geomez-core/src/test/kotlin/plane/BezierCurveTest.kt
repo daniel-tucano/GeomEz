@@ -8,7 +8,11 @@ internal class BezierCurveTest {
 
     @Test
     fun `bezier curve must have first and final point at equal first and last control points`() {
-        val controlPoints = listOf(Point2D(1.0, 1.0), Point2D(1.5, 2.0), Point2D(3.5, 0.2))
+        val controlPoints = listOf(
+            Point2D(1.0, 1.0),
+            Point2D(1.5, 2.0),
+            Point2D(3.5, 0.2)
+        )
         val bezierCurve = BezierCurve(controlPoints)
 
         val firstPoint = bezierCurve(0.0)
@@ -22,7 +26,12 @@ internal class BezierCurveTest {
 
     @Test
     fun `point in the middle of bezier curve must be at the right point`() {
-        val controlPoints = listOf(Point2D(1.0, 1.0), Point2D(1.5, 2.0), Point2D(3.5, 0.2), Point2D(3.0, 0.5))
+        val controlPoints = listOf(
+            Point2D(1.0, 1.0),
+            Point2D(1.5, 2.0),
+            Point2D(3.5, 0.2),
+            Point2D(3.0, 0.5)
+        )
         val bezierCurve = BezierCurve(controlPoints)
 
         val expectedBezierMiddlePoint =

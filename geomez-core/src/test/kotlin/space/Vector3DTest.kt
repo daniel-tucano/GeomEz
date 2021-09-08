@@ -1,11 +1,11 @@
 package space
 
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import space.elements.Direction3D
 import space.elements.Point3D
 import space.elements.Vector3D
 import units.Angle
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
 import kotlin.math.sqrt
 
 class Vector3DTest {
