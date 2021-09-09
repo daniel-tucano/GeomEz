@@ -1,5 +1,6 @@
 package space
 
+import plane.elements.Point2D
 import plane.functions.Function2D
 import space.elements.Direction3D
 import space.elements.Point3D
@@ -11,7 +12,7 @@ import space.elements.Vector3D
  */
 class Function2DInPlane(val function2D: Function2D, val plane: Plane) {
 
-    fun interpolate(x: Double): Point3D = function2D(x).changeBasis(
+    fun interpolate(x: Double): Point3D = Point2D(x,function2D(x)).changeBasis(
         asWrittenIn = plane.coordinateSystem3D,
         to = CoordinateSystem3D.MAIN_3D_COORDINATE_SYSTEM
     )

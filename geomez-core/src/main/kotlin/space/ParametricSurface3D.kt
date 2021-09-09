@@ -10,7 +10,7 @@ class ParametricSurface3D (
 ) {
 
 
-    fun invoke(x: Double, y: Double): Point3D {
+    operator fun invoke(x: Double, y: Double): Point3D {
         return Point3D(xParametricFunction(x,y), yParametricFunction(x,y), zParametricFunction(x,y))
     }
 }

@@ -11,9 +11,9 @@ class VectorialFunction3D(
 
     operator fun invoke(t: Double): Vector3D {
         return Vector3D(
-            xComponentFunction(t).y,
-            yComponentFunction(t).y,
-            zComponentFunction(t).y
+            xComponentFunction(t),
+            yComponentFunction(t),
+            zComponentFunction(t)
         )
     }
 
