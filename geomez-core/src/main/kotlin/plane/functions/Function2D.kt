@@ -19,7 +19,7 @@ interface Function2D {
     fun normalDirection(x: Double): Direction2D = tangentDirection(x).perpendicularDirection()
 
     /**
-     * Return the value of the derivative on hte provided x
+     * Return the value of the derivative on the provided x
      */
     fun derivative (x: Double): Double
 

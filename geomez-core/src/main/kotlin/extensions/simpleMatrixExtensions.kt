@@ -49,6 +49,12 @@ fun SimpleMatrix.mapIndexed(transform: (index: Int, element: Double) -> Double):
     return newMatrix
 }
 
+fun SimpleMatrix.forEachIndexed(operation: (index: Int, element: Double) -> Unit) {
+    (0 until this.numElements).forEach {
+        operation(it, this[it])
+    }
+}
+
 /**
  * When multiplying a 2x2 or 3x3 matrix by a point2D returns a point2D equivalent to that transformation
  */

@@ -9,12 +9,14 @@ fun linspace(start: Double, stop: Double, num: Int): List<Double> {
 
     if (num <= 1) throw IllegalArgumentException("num must be greater then 1")
 
-    val array = MutableList(size = num) { 0.0 }
+    val array = MutableList(size = num - 1) { 0.0 }
     val increment = (stop - start)/(num - 1)
 
-    for (i in 0 until num) {
+    for (i in 0 until num - 1) {
         array[i] = start + i * increment
     }
+
+    array.add(stop)
 
     return  array.toList()
 }

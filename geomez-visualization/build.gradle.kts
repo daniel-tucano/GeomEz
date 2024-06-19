@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "io.github.daniel-tucano"
-version = "0.1.0-SNAPSHOT"
+version = "0.1.0"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
@@ -87,7 +87,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
 
     implementation("org.ejml:ejml-simple:0.41")
-    implementation("io.github.daniel-tucano:matplotlib4k:0.2.7")
+    implementation("io.github.daniel-tucano:matplotlib4k:0.3.0")
 
     implementation(project(":geomez-core"))
 }

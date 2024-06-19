@@ -29,11 +29,11 @@ open class ParametricCurve2D(
         }
     }
 
-    operator fun invoke(x: Double): Point2D {
+    open operator fun invoke(x: Double): Point2D {
         return Point2D(xParametricFunction(x), yParametricFunction(x))
     }
 
-    operator fun invoke(xCollection: Collection<Double>): List<Point2D> {
-        return xCollection.map { x -> Point2D(xParametricFunction(x), yParametricFunction(x)) }
+    open operator fun invoke(xCollection: Collection<Double>): List<Point2D> {
+        return xCollection.map { x -> this(x) }
     }
 }

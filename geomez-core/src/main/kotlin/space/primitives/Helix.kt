@@ -17,9 +17,10 @@ class Helix(
      * Positive in the anti-clockwise direction
      */
     startingAngle: Angle = Angle.Degrees(0.0),
+    startingZ: Double = 0.0,
     antiClockwise: Boolean = true
 ) : Curve3D(
-    constructHelixPoints(nPoints.toInt(), radius, zDistance, turns, startingAngle, antiClockwise)
+    constructHelixPoints(nPoints.toInt(), radius, zDistance, turns, startingAngle, startingZ, antiClockwise)
 ) {
 
     companion object {
@@ -29,6 +30,7 @@ class Helix(
             zDistance: Double,
             turns: Double,
             startingAngle: Angle,
+            startingZ: Double,
             antiClockwise: Boolean
         ): List<Point3D> {
             val pointsList = mutableListOf<Point3D>()
@@ -40,7 +42,7 @@ class Helix(
                     CylindricalCoordinate(
                         radius = radius,
                         angle = (startingAngle + dTheta * i.toDouble() * thetaDirection.toDouble()),
-                        z = dZ * i
+                        z = startingZ + dZ * i
                     ).toPoint3D()
                 )
             }

@@ -16,4 +16,8 @@ class ConvexPolygon2D(points: List<Point2D>) : Polygon2D(points) {
             }
         }
     }
+
+    override fun scale(scalar: Double): ConvexPolygon2D {
+        return ConvexPolygon2D(points.map { point2D -> point2D * scalar })
+    }
 }

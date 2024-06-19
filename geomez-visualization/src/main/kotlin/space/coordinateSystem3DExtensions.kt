@@ -19,7 +19,7 @@ fun CoordinateSystem3D.plot() {
     }
 }
 
-fun CoordinateSystem3D.addPlotCommands(figure: Figure? = null, axes: Axes3D? = null): Pair<Figure, Axes3D> {
+fun CoordinateSystem3D.addPlotCommands(figure: Figure? = null, axes: Axes3D? = null, scale: Double = 1.0): Pair<Figure, Axes3D> {
     val fig = when(figure) {
         null -> figure()
         else -> figure
@@ -33,27 +33,27 @@ fun CoordinateSystem3D.addPlotCommands(figure: Figure? = null, axes: Axes3D? = n
         listOf(this.origin.x),
         listOf(this.origin.y),
         listOf(this.origin.z),
-        listOf(this.xDirection.x),
-        listOf(this.xDirection.y),
-        listOf(this.xDirection.z),
+        listOf(this.xDirection.x * scale),
+        listOf(this.xDirection.y * scale),
+        listOf(this.xDirection.z * scale),
         kwargs = mapOf(Line2D.Line2DArgs.color to KwargValue.Quoted("r"))
     )
     ax.quiver(
         listOf(this.origin.x),
         listOf(this.origin.y),
         listOf(this.origin.z),
-        listOf(this.yDirection.x),
-        listOf(this.yDirection.y),
-        listOf(this.yDirection.z),
+        listOf(this.yDirection.x * scale),
+        listOf(this.yDirection.y * scale),
+        listOf(this.yDirection.z * scale),
         kwargs = mapOf(Line2D.Line2DArgs.color to KwargValue.Quoted("g"))
     )
     ax.quiver(
         listOf(this.origin.x),
         listOf(this.origin.y),
         listOf(this.origin.z),
-        listOf(this.zDirection.x),
-        listOf(this.zDirection.y),
-        listOf(this.zDirection.z),
+        listOf(this.zDirection.x * scale),
+        listOf(this.zDirection.y * scale),
+        listOf(this.zDirection.z * scale),
         kwargs = mapOf(Line2D.Line2DArgs.color to KwargValue.Quoted("b"))
     )
     return (fig to ax)

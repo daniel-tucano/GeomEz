@@ -82,6 +82,14 @@ class LinearSpline(override val points: List<Point2D>) : Points2DList, Function2
         return points.map { it.changeBasis(asWrittenIn, to) }
     }
 
+    override fun translateTo(newCentroid: Point2D): LinearSpline {
+        return LinearSpline(this.points.map { it + newCentroid - this.centroid })
+    }
+
+    override fun scale(scalar: Double): LinearSpline {
+        return LinearSpline(this.points.map { it * scalar })
+    }
+
     override operator fun invoke(x: Double): Double {
         return interpolate(x)
     }

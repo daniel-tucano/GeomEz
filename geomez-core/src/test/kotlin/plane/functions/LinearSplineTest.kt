@@ -18,10 +18,10 @@ internal class LinearSplineTest {
             )
         )
 
-        val interpolatedPoint1 = function(0.0)
-        val interpolatedPoint2 = function(0.125)
-        val interpolatedPoint3 = function(0.75)
-        val interpolatedPoint4 = function(1.5)
+        val interpolatedPoint1 = Point2D(0.0, function(0.0))
+        val interpolatedPoint2 = Point2D(0.125, function(0.125))
+        val interpolatedPoint3 = Point2D(0.75, function(0.75))
+        val interpolatedPoint4 = Point2D(1.5, function(1.5))
 
         assertEquals(interpolatedPoint1.x, 0.0)
         assertEquals(interpolatedPoint1.y, 0.0)

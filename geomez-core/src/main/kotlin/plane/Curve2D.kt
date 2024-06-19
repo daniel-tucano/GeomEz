@@ -27,6 +27,14 @@ class Curve2D (override var points: List<Point2D>): Points2DList {
         return points.map { it.changeBasis(asWrittenIn, to) }
     }
 
+    override fun translateTo(newCentroid: Point2D): Curve2D {
+        return Curve2D(this.points.map { it + newCentroid - this.centroid })
+    }
+
+    override fun scale(scalar: Double): Curve2D {
+        return Curve2D(this.points.map { it * scalar })
+    }
+
     // Point operations
 
     /**

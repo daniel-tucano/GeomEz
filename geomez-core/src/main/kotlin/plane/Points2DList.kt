@@ -1,6 +1,8 @@
 package plane
 
 import plane.elements.Point2D
+import plane.functions.Function2D
+import plane.functions.LinearSpline
 import space.CoordinateSystem3D
 import space.elements.Point3D
 
@@ -39,6 +41,14 @@ interface Points2DList {
     fun first(): Point2D = points.first()
     fun last(): Point2D = points.last()
 
+    fun xParametricFunction(): Function2D {
+        return LinearSpline(this.xPoints.mapIndexed { index, x -> Point2D(index.toDouble()/(xPoints.size - 1), x) })
+    }
+
+    fun yParametricFunction(): Function2D {
+        return LinearSpline(this.yPoints.mapIndexed { index, y -> Point2D(index.toDouble()/(yPoints.size - 1), y) })
+    }
+
     /**
      * Describe point as if was written in the "asWrittenIn" coordinate system in terms of the "to" coordinate system
      */
@@ -48,6 +58,10 @@ interface Points2DList {
      * Describe point as if was written in the "asWrittenIn" coordinate system in terms of the "to" coordinate system
      */
     fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): List<Point3D>
+
+    fun translateTo(newCentroid: Point2D): Points2DList
+
+    fun scale(scalar: Double): Points2DList
 
     operator fun get(index: Int) = this.points[index]
 

@@ -64,7 +64,7 @@ class CubicSpline(
                     coefficientsMatrix[index, firstColumnWrittenInRowIndex + 3] = points[pointIndex].x.pow(3)
                     resultColumn[index] = points[pointIndex].y
                 }
-                (index in (2 * n until (2 * n + 2 * (n - 2)))) -> {
+                (index in (2 * n until (2 * n + n - 1))) -> {
                     val pointIndex = index - 2 * n + 1
                     val firstColumnWrittenInRowIndex = (index - 2 * n) * 4
                     coefficientsMatrix[index, firstColumnWrittenInRowIndex] = 0.0
@@ -78,9 +78,9 @@ class CubicSpline(
                     coefficientsMatrix[index, firstColumnWrittenInRowIndex + 7] = -3.0 * points[pointIndex].x.pow(2)
                     resultColumn[index] = 0.0
                 }
-                (index in ((2 * n + 2 * (n - 2)) until (4 * n - 2))) -> {
-                    val pointIndex = index - 2 * n - 2 * (n - 2) + 1
-                    val firstColumnWrittenInRowIndex = (index - 2 * n - 2 * (n - 2)) * 4
+                (index in ((2 * n + n - 1) until (4 * n - 2))) -> {
+                    val pointIndex = index - 2 * n - n + 2
+                    val firstColumnWrittenInRowIndex = (index - 2 * n - n + 1) * 4
                     coefficientsMatrix[index, firstColumnWrittenInRowIndex] = 0.0
                     coefficientsMatrix[index, firstColumnWrittenInRowIndex + 1] = 0.0
                     coefficientsMatrix[index, firstColumnWrittenInRowIndex + 2] = 2.0
@@ -145,5 +145,13 @@ class CubicSpline(
 
     override fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): List<Point3D> {
         return points.map { it.changeBasis(asWrittenIn, to) }
+    }
+
+    override fun translateTo(newCentroid: Point2D): CubicSpline {
+        return CubicSpline(this.points.map { it + newCentroid - this.centroid })
+    }
+
+    override fun scale(scalar: Double): CubicSpline {
+        return CubicSpline(this.points.map { it * scalar })
     }
 }

@@ -5,7 +5,9 @@ import extensions.times
 import space.CoordinateSystem3D
 import units.Angle
 import utils.rotationMatrix3D
+import kotlin.math.cos
 import kotlin.math.pow
+import kotlin.math.sin
 import kotlin.math.sqrt
 
 /**
@@ -40,6 +42,17 @@ class Point3D(
     override fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): Point3D =
         to.affineMatrix.invert() * asWrittenIn.affineMatrix * this
 
+
+    fun toCylindricalCoordinate(): CylindricalCoordinate {
+        val radius = sqrt(distanceFromOrigin.pow(2.0) - this.z.pow(2.0))
+        return CylindricalCoordinate(
+            radius,
+            Angle.Radians(
+                cos(this.x/radius) * (if (sin(this.y/radius) < 0) -1.0 else 1.0)
+            ),
+            this.z
+        )
+    }
 
 //    Point operations
 

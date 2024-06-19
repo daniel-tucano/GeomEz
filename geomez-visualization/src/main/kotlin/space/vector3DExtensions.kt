@@ -19,12 +19,16 @@ fun Vector3D.plot() {
     }
 }
 
-fun Vector3D.addPlotCommands(figure: Figure? = null, axes: Axes3D? = null, kwargs:  Map<KwargKey, KwargValue>? = null): Pair<Figure, Axes3D> {
-    val fig = when(figure) {
+fun Vector3D.addPlotCommands(
+    figure: Figure? = null,
+    axes: Axes3D? = null,
+    kwargs: Map<KwargKey, KwargValue>? = null
+): Pair<Figure, Axes3D> {
+    val fig = when (figure) {
         null -> figure()
         else -> figure
     }
-    val ax = when(axes) {
+    val ax = when (axes) {
         null -> fig.add_subplot(projection = Figure.AddSubplotProjectionOptions.`3d`) as Axes3D
         else -> axes
     }

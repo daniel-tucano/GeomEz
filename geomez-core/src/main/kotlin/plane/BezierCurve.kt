@@ -34,4 +34,13 @@ class BezierCurve(
         }
     }
 
+    override operator fun invoke(x: Double): Point2D {
+        if(x == 0.0) {
+            return controlPoints.first()
+        } else if (x == 1.0) {
+            return controlPoints.last()
+        }
+        return Point2D(xParametricFunction(x), yParametricFunction(x))
+    }
+
 }

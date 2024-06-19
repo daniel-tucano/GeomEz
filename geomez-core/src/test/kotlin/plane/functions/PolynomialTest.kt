@@ -3,7 +3,6 @@ package plane.functions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import plane.elements.Point2D
 
 internal class PolynomialTest {
 
@@ -16,10 +15,10 @@ internal class PolynomialTest {
         val point3 = polynomial(1.2)
         val point4 = polynomial(5.1)
 
-        assertTrue(point1 == Point2D(0.0,1.0))
-        assertTrue(point2 == Point2D(1.0,10.0))
-        assertTrue(point3 == Point2D(1.2,14.632))
-        assertTrue(point4 == Point2D(5.1,619.834))
+        assertTrue(point1 == 1.0)
+        assertTrue(point2 == 10.0)
+        assertTrue(point3 == 14.632)
+        assertTrue(point4 == 619.834)
     }
 
     @Test

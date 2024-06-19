@@ -32,12 +32,20 @@ open class Polygon2D(override var points: List<Point2D>) : Points2DList {
         return Polygon2D(points.map { it.rotate(centerOfRotation, angle) })
     }
 
+    override fun translateTo(newCentroid: Point2D): Polygon2D {
+        return Polygon2D(this.points.map { it + newCentroid - this.centroid })
+    }
+
     override fun changeBasis(asWrittenIn: CoordinateSystem2D, to: CoordinateSystem2D): List<Point2D> {
         return points.map { it.changeBasis(asWrittenIn, to) }
     }
 
     override fun changeBasis(asWrittenIn: CoordinateSystem3D, to: CoordinateSystem3D): List<Point3D> {
         return points.map { it.changeBasis(asWrittenIn, to) }
+    }
+
+    override fun scale(scalar: Double): Polygon2D {
+        return Polygon2D(this.points.map { it * scalar })
     }
 
 }

@@ -1,5 +1,7 @@
 package space
 
+import io.github.danielTucano.matplotlib.KwargValue.Unquoted
+import io.github.danielTucano.matplotlib.Line2D.Line2DArgs.linewidth
 import org.junit.jupiter.api.Test
 import plane.functions.Polynomial
 import plane.plot
@@ -17,7 +19,7 @@ internal class Points3DListExtensionsKtTest {
         val functionInPlane = Function2DInPlane(function, plane)
         val pointsList = functionInPlane(xValues)
 
-        pointsList.plot(width = 5.0)
+        pointsList.plot(mapOf(linewidth to Unquoted("1.0")))
     }
 
 
